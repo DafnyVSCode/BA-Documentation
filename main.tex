@@ -1,4 +1,3 @@
-
 \documentclass[12pt,titlepage]{article}
 \usepackage[table]{xcolor}
 \usepackage{longtable}
@@ -14,7 +13,7 @@
 \usepackage[justification=centering]{caption}
 \usepackage{enumitem}
 \usepackage{chngcntr}
-
+\usepackage{lscape}
 
 %Each Section in a new Page
 \let\oldsection\section
@@ -37,20 +36,37 @@
 % Smaler Table Space
 \renewcommand{\arraystretch}{1.5}
 
-\title{Projecttitle}
-\author{Firstname Lastname}
-\date{Date}
+\title{Visual Studio Code Integration for the Dafny Language and Program Verifier}
+\author{Rafael Krucker, Markus Schaden}
+\date{20.02.2017}
 
 \begin{document}
 \pagenumbering{Roman} 
 
+% TODO
+%\includepdf{titlepage/titlepage}
+
+% TODO
+%\input{presections/abstract}
+%\newpage
+%\input{presections/managementsummary}
+
+% TODO
+%\includepdf[pages={1-}, 
+%scale=0.9,pagecommand=\thispagestyle{plain}]{additionals/eigenstaendigkeit}
+%\includepdf[pages={1-2}, 
+%scale=0.9,pagecommand=\thispagestyle{plain}]{additionals/aufgabenstellung}
 
 \newpage
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-\input{sections/useCases}
 
+\input{sections/useCases}
+\input{sections/projectmanagement}
+%\input{sections/conception}
+%\input{sections/results}
+%\input{sections/ausblick}
 
 \appendix
 
@@ -60,4 +76,5 @@
 \listoftables
 \addcontentsline{toc}{section}{\listtablename}
 
+%\input{sections/anhang}
 \end{document}
