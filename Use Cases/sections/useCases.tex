@@ -202,3 +202,60 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	Open Issues & None \\ \hline
 	\caption{UC6}
 \end{longtable}
+
+\subsubsection{U7: Automatic generation of contracts}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & The plugin can be configured with a simple DSL-File to recognize certain semantics, which could benefit from the setting of Pre- and Postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
+	Stakeholder and Interests & Programmer: Wants to write the correctest code possible making use of Dafny's specification constructs. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ \hline
+	Preconditions &
+	\begin{itemize}
+		\item Visual Studio Code with the Dafny plugin installed is running.
+		\item Dafny code is being written in a .dfy file.
+	\end{itemize}\\ \hline
+	Postconditions &
+	\begin{itemize}
+		\item Specification constructs suitable for the context were added as refactorings.
+	\end{itemize}\\ \hline
+	Main Success Scenario & 
+	1. The plugin is installed preconfigured with a collection of common semantics for Dafny and their corresponding specification constraints, which is done through a DSL file. \newline
+	2. Programmer types code into a .dfy file. \newline 
+	3. The plugin continuously checks for semantics that could benefit form the setting of specification constraints. \newline 
+	4. If such a semantic is detected, it is reported through the standard mechanisms of Visual Studio Code, with a refactoring offered to add the constraints. \newline
+	5. The programmer invokes the refactorings and the necessary code is added.\\ \hline
+	Extensions & 
+	1a. The predefined semantics and refactorings are not sufficient for the programmer. \newline 
+	- The programmer can updated the configuration file himself to include support for his own or his company's  common code semantics. \\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Very often, after new valid syntax was written.\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC7}
+\end{longtable}
+
+\subsubsection{UC8: Autocompletion for identifiers}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & The plugin offers autocompletion of Dafny code while the user types via the standard Visual Studio Code mechanisms.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
+	Stakeholder and Interests & Programmer: Wants enhanced productivity while writing Dafny code. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ \hline
+	Preconditions &
+	\begin{itemize}
+		\item Visual Studio Code with the Dafny plugin installed is running.
+		\item Dafny code is being written in a .dfy file.
+	\end{itemize}\\ \hline
+	Postconditions &
+	\begin{itemize}
+		\item An identifier was autocompleted.
+	\end{itemize}\\ \hline
+	Main Success Scenario & 
+	1. Programmer types code into a .dfy file. \newline
+	2. The plugin detects the changes and searches for the beginning of known identifiers. \newline
+	3. If such a beginning is found, completion if offered through the standard mechanisms of Visual Studio Code.\\ \hline
+	Extensions & 
+	None. \\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Very often, after every key up event.\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC8}
+\end{longtable}
