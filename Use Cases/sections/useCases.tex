@@ -1,5 +1,11 @@
 \section{Use Cases}
-\subsection{Use Case Diagramm}
+\subsection{Use Case Diagram}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\linewidth, height=5in]{"./img/UseCase Diagram"}
+	\caption{Use Case Diagram}
+	\label{fig:usecase-diagram}
+\end{figure}
 \subsection{Actors and Stakeholder}
 \begin{itemize}
 	\item Programmers
@@ -174,7 +180,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\caption{UC5}
 \end{longtable}
 
-\subsubsection{U6: Reporting of Dafny best practices violations}
+\subsubsection{UC6: Reporting of Dafny best practices violations}
 \begin{longtable}{l | p{0.7\textwidth} }
 	Description & The plugin can be configured with a simple DSL config file which describes common best practices for Dafny. The Plugin reports violations of these rules via the standard Visual Studio Code notification mechanisms.\\ \hline
 	Primary Actor & Programmer\\ \hline
@@ -203,7 +209,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\caption{UC6}
 \end{longtable}
 
-\subsubsection{U7: Automatic generation of contracts}
+\subsubsection{UC7: Automatic generation of contracts}
 \begin{longtable}{l | p{0.7\textwidth} }
 	Description & The plugin can be configured with a simple DSL-File to recognize certain semantics, which could benefit from the setting of Pre- and Postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
 	Primary Actor & Programmer\\ \hline
