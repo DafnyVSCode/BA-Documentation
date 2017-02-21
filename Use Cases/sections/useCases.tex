@@ -1,17 +1,21 @@
 \section{Use Cases}
 \subsection{Use Case Diagramm}
 \subsection{Aktoren und Stakeholder}
+\begin{itemize}
+	\item Programmers
+	\item Microsoft
+\end{itemize}
 \subsection{Descriptions (brief)}
-\subsubsection{UC1: Stable working Release on Windows}
-A User can install the Dafny Plugin on his .Net environment running on Windows 10.
-\subsubsection{UC2: Stable working Release on Linux}
-A User can install the Dafny Plugin on his mono environment running on a common Linux distribution such as Ubuntu 16.04.
-\subsubsection{UC3: Stable working Release on OSX}
-A User can install the Dafny Plugin on his mono environment running on OSX.
+\subsubsection{UC1: Windows Installation}
+A programmer can install the Dafny Plugin on his .Net environment running on Windows 10.
+\subsubsection{UC2: Linux Installation}
+A programmer can install the Dafny Plugin on his mono environment running on a common Linux distribution such as Ubuntu 16.04.
+\subsubsection{UC3: OSX Installation}
+A programmer can install the Dafny Plugin on his mono environment running on OSX.
 \subsubsection{UC4: Easy installation of Dafny plugin}
-A User can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.
+A programmer can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.
 \subsubsection{UC5: Syntax Highlighting}
-The system automatically does syntax highlighting while the user writes a Dafny (dy.) file.
+The system automatically does syntax highlighting while the user writes a Dafny (dfy.) file.
 \subsubsection{UC6: Compilation of Dafny best practices and reporting of these rules}
 The plugin can be configured with a simple json-like config file which describes common best practices for Dafny. The Plugin reports violations of these rules via the standard Visual Studio Code notification mechanisms.
 \subsubsection{UC7: Automatic generation of contracts}
@@ -19,3 +23,152 @@ The plugin can be configured with a simple DSL-File to recognize certain semanti
 \subsubsection{UC8: Autocompletion for identifiers}
 The plugin offers autocompletion of Dafny code while the user types via the standard Visual Studio Code mechanisms.
 \subsection{Descriptions (fully dressed)}
+\subsubsection{UC1: Windows Installation}
+\rowcolors{1}{gray!25}{white}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & A programmer can install the Dafny Plugin on his .Net environment running on Windows 10.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer wants to programm Dafny in Visual Studio Code.\\ \hline
+	Stakeholder and Interests & 
+	\begin{itemize}
+		\item Programmer: Wants stable support from the IDE while developing Code.
+		\item Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.
+	\end{itemize} \\ \hline
+	Preconditions & 
+ \begin{itemize}
+		\item Windows 10 Environment with a modern version of the .Net Framework installed.
+	\end{itemize} \\ \hline
+	Postconditions & 
+	\begin{itemize}
+		\item The plugin works without problems, the programmer can start writing code.
+	\end{itemize} \\ \hline
+	Main Success Scenario & 1. Programmer downloads the plugin. \newline
+	2. During an automated installation routine, the plugin installs itself and all needed environmental changes are made. (UC4) \newline
+	3. Visual Studio code is updated to use the plugin, a success message is shown\\ \hline
+	Extensions & 
+	2a. The installer notices that some dependencies are missing. \newline 
+	- It notifies the programmer accordingly.\\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Usually once per working environment\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC1}
+\end{longtable}
+\subsubsection{UC2: Linux Installation}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & A programmer can install the Dafny Plugin on his mono environment running on a common Linux distribution such as Ubuntu 16.04.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer wants to programm Dafny in Visual Studio Code.\\ \hline
+	Stakeholder and Interests & 
+	\begin{itemize}
+		\item Programmer: Wants stable support from the IDE while developing Code.
+		\item Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.
+	\end{itemize} \\ \hline
+	Preconditions & 
+	\begin{itemize}
+		\item A modern common Linux distribution such Ubuntu 16.04 or Fedora with the mono framework installed.
+	\end{itemize} \\ \hline
+	Postconditions &
+	\begin{itemize}
+		\item The plugin works without problems, the programmer can start writing code.
+	\end{itemize} \\ \hline
+	Main Success Scenario & 1. Programmer downloads the plugin. \newline
+	2. During an automated installation routine, the plugin installs itself and all needed environmental changes are made. (UC4) \newline
+	3. Visual Studio code is updated to use the plugin, a success message is shown\\ \hline
+	Extensions &
+	2a. The installer notices that some dependencies are missing. \newline
+	- It notifies the programmer accordingly.\\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Usually once per working environment\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC2}
+\end{longtable}
+
+\subsubsection{UC3: OSX Installation}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & A programmer can install the Dafny Plugin on his mono environment running on OSX.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer wants to programm Dafny in Visual Studio Code.\\ \hline
+	Stakeholder and Interests & 
+	\begin{itemize}
+		\item Programmer: Wants stable support from the IDE while developing Code.
+		\item Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.
+	\end{itemize} \\ \hline
+	Preconditions &
+	\begin{itemize}
+		\item A modern version of the OSX OS installed such as canberra with the mono framework installed.
+	\end{itemize} \\ \hline
+	Postconditions &
+	\begin{itemize}
+		\item The plugin works without problems, the programmer can start writing code.
+	\end{itemize} \\ \hline
+	Main Success Scenario & 1. Programmer downloads the plugin. \newline
+	2. During an automated installation routine, the plugin installs itself and all needed environmental changes are made. (UC4) \newline
+	3. Visual Studio code is updated to use the plugin, a success message is shown\\ \hline
+	Extensions & 
+	2a. The installer notices that some dependencies are missing. \newline 
+	- It notifies the programmer accordingly.\\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Usually once per working environment\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC3}
+\end{longtable}
+
+\subsubsection{UC4: Easy installation of Dafny plugin}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & A programmer can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer wants install the Dafny plugin to visual studio code.\\ \hline
+	Stakeholder and Interests & Programmer: Wants an easy, automated installation of the plugin. \newline Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.\\ \hline
+	Preconditions &\begin{itemize}
+		\item Depending on the environment, the preconditions of UC1, UC2 or UC3 are satisfied.
+		\item Visual Studio Code is installed.
+		\item The Dafny server binary and it's dependencies are installed.
+		\item The programmer has admin priviledges in his environment.
+	\end{itemize}\\ \hline
+	Postconditions & The plugin works without problems, the programmer can start writing code.\\ \hline
+	Main Success Scenario & 
+	1. Programmer downloads the plugin via the Visual Studio Code plugin store. \newline
+	2. The plugin determines which platform it is run on, and sets either the path to the .Net framework or the mono framework. \newline
+	3. The plugin sets the path to the Dafny server binary. \newline
+	4. The plugin then installs itself via the standard Visual Studion Code plugin mechanisms. \newline
+	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\ \hline
+	Extensions & 
+	2a. The installer can't, depending on the enviroment, either the mono or the .Net framework in the standard locations. \newline 
+	- It prompts the user to enter the location and does so until the framework is found. \newline
+	3a. The installer can't find the Dafny server binaries in the path. \newline
+	- It prompts the user to enter the location and does so until the framework is found.\\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Usually once per working environment\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC4}
+\end{longtable}
+
+\subsubsection{UC5: Syntax Highlighting}
+\begin{longtable}{l | p{0.7\textwidth} }
+	Description & The system automatically does syntax highlighting while the user writes a Dafny (dfy.) file.\\ \hline
+	Primary Actor & Programmer\\ \hline
+	Trigger & Programmer wants install the Dafny plugin to visual studio code.\\ \hline
+	Stakeholder and Interests & Programmer: Wants an easy, automated installation of the plugin. \newline Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.\\ \hline
+	Preconditions &\begin{itemize}
+		\item Depending on the environment, the preconditions of UC1, UC2 or UC3 are satisfied.
+		\item Visual Studio Code is installed.
+		\item The Dafny server binary and it's dependencies are installed.
+		\item The programmer has admin priviledges in his environment.
+	\end{itemize}\\ \hline
+	Postconditions & The plugin works without problems, the programmer can start writing code.\\ \hline
+	Main Success Scenario & 
+	1. Programmer downloads the plugin via the Visual Studio Code plugin store. \newline
+	2. The plugin determines which platform it is run on, and sets either the path to the .Net framework or the mono framework. \newline
+	3. The plugin sets the path to the Dafny server binary. \newline
+	4. The plugin then installs itself via the standard Visual Studion Code plugin mechanisms. \newline
+	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\ \hline
+	Extensions & 
+	2a. The installer can't, depending on the enviroment, either the mono or the .Net framework in the standard locations. \newline 
+	- It prompts the user to enter the location and does so until the framework is found. \newline
+	3a. The installer can't find the Dafny server binaries in the path. \newline
+	- It prompts the user to enter the location and does so until the framework is found.\\ \hline
+	Special Requirements & None\\ \hline
+	Frequency of Occurence & Usually once per working environment\\ \hline
+	Open Issues & None \\ \hline
+	\caption{UC5}
+\end{longtable}
