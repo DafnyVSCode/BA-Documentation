@@ -8,7 +8,7 @@
 		\textbf{Max Harm [h]} & \textbf{Proba- bility} & \textbf{Prevention} &  
 		\textbf{Behaviour at entry}\\ \hline
 		
-		R1 & Underestimation of workload & One or more team members can't finish a feature in time or loses to much time on a minor feature & 120 & 25\% & Weekly scrum meetings with feedback about the current work progress. Estimate workload together. Include time reserve & Help each other, if one is struggling. Feature reduction as last resort. \\ 
+		R1 & Underestimation of workload & One or more team members can't finish a feature in time or loses to much time on a minor feature & 70 & 25\% & Weekly scrum meetings with feedback about the current work progress. Estimate workload together. Include time reserve & Help each other, if one is struggling. Feature reduction as last resort. \\ 
 		
 		R2 & Workflow is not working & Toolchain is not working as planed. The used components aren't ideal for the problem & 30 & 15\% & Use experience to get a good setup and test it alot in the beginning & Redefine toolchain or change single tool \\ 
 		
@@ -25,6 +25,8 @@
 		R8 & Supporting all features on the different environments is not possible & Due to that Windows, OSX and Linux are quite different, it could be that some features aren't possible to implement on a platform or causes a big overhead to get it running & 10 & 25\% & Using as much of the standard API as possible. Implement specific features platform dependant. & Disable a certain feature on a platform or look for a workaround. \\	
 		
 		R9 & Automatic installer of Dafny is not possible & Maybe because of security restrictions, it could be possible that you can't download and install additional software and set environment variables. & 35 & 20\% & Test if downloading of software can done inside VS Code. & Automatic installer can't be done inside the plugin. Switch to a different strategy and implement an automatic installer over a additional executable, which could also install the plugin in vscode. \\
+		
+		R10 & Dafny and the way it is used is not well understood & If it is not clear how exactly the workflow of a Dafny programmer could be enhanced, there is the possibility that alot of features could be implemented that don't better the programmer experience at all. & 80 & 20\% & Regular feedback loop with people that use Dafny. & Learn alot about Dafny ourselves, talk to people that use Dafny.  \\
 		
 		\caption{Risk management}
 		\label{tab:Risk management}
