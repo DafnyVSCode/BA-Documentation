@@ -1,0 +1,42 @@
+\subsection{Test specification}
+
+\subsubsection{Integration Tests}
+VS Code extensions which requires the API can be tested, with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like create a new file, enter a character, use the auto-complete and verify if the extension works as expected. Therefore  
+
+
+\subsubsection{Unit Tests}
+	Visual Studio Code plugins can be additionally tested with standard javascript testing frameworks like Mocha or Jasmine. This allows to test core logic without the need to run tests inside VS Code. 
+
+\subsubsection{Testcases}
+
+\begin{longtable}{ p{0.4\textwidth} | p{0.6\textwidth} }
+	\textbf{Testcase} & \textbf{Verify}\\
+	UC1: Windows Installation\newline 
+	UC2: Linux Installation\newline 
+	UC3: OSX Installation & 
+		The language dafny is available\newline 
+		.dfy files are associated with the dafny plugin\newline
+		The server is started\newline
+		The status is changed after the file have been checked\newline
+		If the server crashes, this is reported and the server is restarted
+	\\
+	UC4: Easy installation of Dafny plugin & 
+		The plugin automatically downloads and installs dafny\newline
+		Sets the dafny server path \newline
+		Shows a message if .Net framework or mono is missing
+	\\
+	UC5: Syntax Highlighting & 
+		Syntax is highlighted
+	\\
+	UC6: Reporting of Dafny best practices violations &
+		\todo{?}
+	
+ 	\\
+	UC7: Automatic generation of contracts & \todo{Invariant: Require and ensures are generated?} \\
+	UC8: Autocompletion for identifiers & 
+		Autocompletion is working for all known dafny identifiers\newline
+		Methods are considered for autocompletion as well
+		
+	
+	\\
+\end{longtable}

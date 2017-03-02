@@ -15,6 +15,8 @@
 \usepackage{chngcntr}
 \usepackage{lscape}
 \usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{dafny}
 \usepackage[margin=1in]{geometry}
 
 %Each Section in a new Page
@@ -32,6 +34,13 @@
 %Reset figure/table counter after section change
 \counterwithin{figure}{section}
 \counterwithin{table}{section}
+
+%Syntax Highlighting
+\lstdefinestyle{dafny}{language=dafny, frame=lr}
+
+%TODO
+\newcommand{\todonl}[1]{\newline\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
 
 %Set Paragraph indent to null
 \setlength{\parindent}{0pt}
@@ -69,7 +78,8 @@
 \input{sections/problemSetting}
 \input{sections/useCases}
 \input{sections/projectmanagement}
-%\input{sections/conception}
+\input{sections/systemsetup}
+\input{sections/conception}
 %\input{sections/results}
 %\input{sections/ausblick}
 

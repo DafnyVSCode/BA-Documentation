@@ -1,0 +1,107 @@
+\subsection{Contract generation examples}
+
+\todo{Introduction}
+
+\subsubsection{Example 1: Array access}
+
+\paragraph{Problem:}
+
+A method access an array with an index, which is given as a parameter. The array may be a field or also be a parameter. The array may be null or the index may be out of bound.
+\paragraph{Solution:}
+Generate a precondition which checks if the array is not null and the index is in bound of the array.
+\todonl{partial functions or Invariants or Non provable goals}
+\paragraph{Code:}
+\lstset{style=dafny}
+\begin{lstlisting}
+method FindUsafe(a: array<int>, key: int) return (element: int)
+{
+	return a[key];
+}
+
+method FindSafe(a: array<int>, key: int) return (element: int)
+	requires a != null && 0 <= key < a.Length
+{
+	return a[key];
+}
+\end{lstlisting}
+
+
+
+\subsubsection{Example 2: Domain specific constraints}
+\paragraph{Problem:}
+A bank wants to digitalize its transaction handling. They don’t want to allow negative balances on any account. A method which modifies the balance may bring it to a negative amount.
+\paragraph{Solution:}
+Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
+\todonl{partial functions or Invariants or Non provable goals}
+\paragraph{Code:}
+\lstset{style=dafny}
+\begin{lstlisting}
+class BankAccountUnsafe {
+	var balance: int;
+	
+	method withdraw(amount: int) modifies this {
+	b	alance := balance - amount;
+	}
+}
+
+class BankAccountSafe {
+	var balance: int;
+	
+	method withdraw(amount: int) 
+		requires balance >= amount  
+		ensures balance >= 0  
+	modifies this {
+		balance := balance - amount;
+	}
+}
+\end{lstlisting}
+
+
+\subsubsection{Example 3: Domain specific constraints a little more complex}
+\paragraph{Problem:}
+In a skater game, it is possible to do tricks as well as get augmented steel legs. In the adjustment phase of the artificial legs, it should not be possible to do tricks that hold the risk of falling to the ground.
+\paragraph{Solution:}
+Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
+\todonl{partial functions or Invariants or Non provable goals}
+\paragraph{Code:}
+\lstset{style=dafny}
+\begin{lstlisting}
+
+class Trick {
+	var isTooHard: bool;
+	method do() {
+		...
+	}
+}
+
+class NormalSkater {
+	var fell: bool;
+	
+	method doTrick(trick: Trick) 
+		requires trick != null
+	modifies this {
+		this.fell := false;
+		trick.do();
+		if(trick.isTooHard) {
+			this.fell := true;
+		}
+	}
+}
+
+class ProfiSkater {
+	var fell: bool;
+	
+	method doTrick(trick: Trick) 
+		requires trick != null
+		requires !trick.isTooHard
+		ensures !fell
+	modifies this {
+		this.fell := false;
+		trick.do();
+		if(trick.isTooHard) {
+			this.fell := true;
+		}
+	}
+}
+
+\end{lstlisting}
