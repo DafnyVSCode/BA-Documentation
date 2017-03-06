@@ -16,7 +16,10 @@
 \usepackage{lscape}
 \usepackage{fancyhdr}
 \usepackage{listings}
+\usepackage[style=alphabetic, backend=biber]{biblatex}
 \usepackage{dafny}
+\usepackage{hyperref}
+\usepackage{nameref}
 \usepackage[margin=1in]{geometry}
 
 %Each Section in a new Page
@@ -53,7 +56,7 @@
 
 \pagestyle{fancy}
 \lhead{BA Dafny}
-
+\addbibresource{LITERATURVERZEICHNIS/bibliographie.bib}
 \begin{document}
 \pagenumbering{Roman} 
 
@@ -90,6 +93,6 @@
 
 \listoftables
 \addcontentsline{toc}{section}{\listtablename}
-
+\printbibliography[heading=bibintoc]
 %\input{sections/anhang}
 \end{document}

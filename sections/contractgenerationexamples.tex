@@ -1,15 +1,13 @@
 \subsection{Contract generation examples}
-
-\todo{Introduction}
-
-\subsubsection{Example 1: Array access}
+Since Dafny offers built-in specification constructs, a programmer would greatly benefit from generation of contracts for common situations. This chapter first introduces three examples in programming, that could be made safer through the use of contracts. Then the underlying abstractions are tried to be found, through which the mechanisms can be implemented.  
+\subsubsection{Example 1: Array access} \label{Example 1}
 
 \paragraph{Problem:}
 
 A method access an array with an index, which is given as a parameter. The array may be a field or also be a parameter. The array may be null or the index may be out of bound.
 \paragraph{Solution:}
 Generate a precondition which checks if the array is not null and the index is in bound of the array.
-\todonl{partial functions or Invariants or Non provable goals}
+
 \paragraph{Code:}
 \lstset{style=dafny}
 \begin{lstlisting}
@@ -27,12 +25,12 @@ method FindSafe(a: array<int>, key: int) return (element: int)
 
 
 
-\subsubsection{Example 2: Domain specific constraints}
+\subsubsection{Example 2: Domain specific constraints} \label{Example 2}
 \paragraph{Problem:}
 A bank wants to digitalize its transaction handling. They don’t want to allow negative balances on any account. A method which modifies the balance may bring it to a negative amount.
 \paragraph{Solution:}
 Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
-\todonl{partial functions or Invariants or Non provable goals}
+
 \paragraph{Code:}
 \lstset{style=dafny}
 \begin{lstlisting}
@@ -40,7 +38,7 @@ class BankAccountUnsafe {
 	var balance: int;
 	
 	method withdraw(amount: int) modifies this {
-	b	alance := balance - amount;
+		balance := balance - amount;
 	}
 }
 
@@ -57,12 +55,12 @@ class BankAccountSafe {
 \end{lstlisting}
 
 
-\subsubsection{Example 3: Domain specific constraints a little more complex}
+\subsubsection{Example 3: Domain specific constraints a little more complex} \label{Example 3}
 \paragraph{Problem:}
 In a skater game, it is possible to do tricks as well as get augmented steel legs. In the adjustment phase of the artificial legs, it should not be possible to do tricks that hold the risk of falling to the ground.
 \paragraph{Solution:}
 Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
-\todonl{partial functions or Invariants or Non provable goals}
+
 \paragraph{Code:}
 \lstset{style=dafny}
 \begin{lstlisting}
@@ -105,3 +103,42 @@ class ProfiSkater {
 }
 
 \end{lstlisting}
+
+\subsubsection{Underlying problems}
+When the examples above are closer examined, common patterns can be found. This subsection first details three common patterns, after which the next subsections sets them into connections with the problems above.
+
+\paragraph{Application of partial functions} \label{partial function}
+One of the three problems can be expressed as the application of partial functions, which are defined by the following three objects:
+\begin{itemize}
+	\item A set A called the input set of the function
+	\item A set B called the output set of the function.
+	\item A rule f that transforms some elements of A to some elements of B such that no element a from A is transformed to more than one element of B.\cite[197]{khoussainov}
+\end{itemize}
+The definition states that not all input values may be mapped by the function. The problem here therefor is to ensure that the function is applied on only a valid subset of A.
+
+
+\paragraph{Invariants} \label{invariants}
+An Invariant can be defined as follows: A quantity which remains unchanged under certain classes of transformations. Invariants are extremely useful for classifying mathematical objects because they usually reflect intrinsic properties of the object of study.\cite[282ff]{hunt}
+\newline An Invarant is therefor extremly useful when one wants to ensure certain conditions of an object, which must hold at all times. If an invariant is to be applied to an object with multiple attributes, it is usually defined as a postconditions on all attributes. 
+
+\paragraph{Non provable Goals} \label{non provable goal}
+These are situations, that are impossible to prove, because some preconditions do not hold or not sufficent information is available. They are very hard to detect and isolate from provable goals, although some work has found solutions under certain restrictions, for instance \cite{goals}. When an unprovable goal is encountered in a context, it is much easier to simply state is as a precondition for the context to be valid, thus burdening the calling context to ensure the goal holds. 
+
+\subsubsection{Solving the problems in an abstract way}
+This subsection finally shows how the patterns detailed above can be used to solve the programming examples, thus allowing generic solutions for many similar problems.
+
+\paragraph{Problem 1}
+The situation shown in \ref{Example 1} is a very common sitatuation while programming, basically one wants to prove that the index is always in the bounds of the array. Accessing an element in an array is an example of the \nameref{partial function}, where the set A only goes from zero to the length of the array minus one. Therefor one would have to prove that the application of the partial function does not result in an invalid element being given as an argument. The expression, which is used to get access can be arbitrarily complex. The computation to ensure the in-boundness can be very expensive.  \newline
+Also the second pattern discussed in \nameref{invariants} could be applied, always ensuring that a given parameter is in bound of an array of an object, although this would not work with how invariants are normally applied, namely as postconditions. Since the expression that generates the index has nothing to do with the object itself, it is questionable if this is the right pattern to apply in this situation. \newline
+The third pattern, discussesd in \nameref{non provable goal}, works very well if one assumes that it can't be proven that the expression will always lead to a successful application of the partial function (although it could be proven in many cases). This allows to define this property as a precondition of the method, thus shifting the burden to the caller to always check his arguments. this is an easy and feasable solution to the first problem. 
+
+\paragraph{Problem 2} \label{Problem 2}
+The example in \ref{Example 2} is an example of a domain specific limitation where a bankaccounts balance should never fall below zero. In this specific implementation the usage of \nameref{partial function} could be discussed, since it is implemented as binary minus function which only allows subtrahends from a certain range, although this approach could not be used for all possible implementations and is therefor not a feasable solution. \newline
+The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an Invariant, that the balance has always to be positive. This does not suffice though, as it does not isolate the parts yet which could break the invariant. \newline
+The third pattern, discussesd in \nameref{non provable goal}, works very well in conjunction with the second one. All sub goals that should hold that the invariant holds, in this case that the amount should be smaller than the balance, can be viewed as unprovable goals in this context. They can be therefor be formulated as preconditions such that the caller has the burden of applying correct arguments to the function. This practice isolates the parts which could break the invariant, allowing to write the function as safe as possible.
+
+\paragraph{Problem 3}
+The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let a skater fall, therefor only allowing tricks that or on pair with his skill. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value false on the toHard property of a trick. However, if we extend the hierarchy of tricks and implement the calculation of toHard differently, it is unclear if all cases could be computet efficiently. \newline
+The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an Invariant, that the fell property on the skater is always false. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \nameref{Problem 2} \newline
+The third pattern could be much in the same way as in \nameref{Problem 2}. The condition, that the trick may never be tooHard, can be written as a preconditions and together with the usage of invariants holds the greates amount of security regarding the domain constraints.
+\todonl{Conclusion}
