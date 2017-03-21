@@ -1,0 +1,47 @@
+\subsection{Dafny VSCode}
+
+
+\subsubsection{Dafny VSCode}
+Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{https://github.com/FunctionalCorrectness/dafny-vscode}
+
+\subsubsection{DafnyServer}
+Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-microsoft}{https://github.com/FunctionalCorrectness/dafny-microsoft}
+
+To support refactorings in the Dafny VSCode plugin, the DafnyServer was extended. A new verb "symbols" was introduced, which returns a json formatted symbol table, of the input file. 
+
+Example:
+\begin{lstlisting}[language=json,firstnumber=1]
+{[
+{
+	"Module" : "_module",
+	"Name" : "Fibonacci",
+	"ParentClass" : "_default",
+	"SymbolType" : "Function",
+	"Position" : 190,
+	"Line" : 17,
+	"Column" : 12
+}, {
+	"Module" : "_module",
+	"Name" : "Test",
+	"ParentClass" : null,
+	"SymbolType" : "Class",
+	"Position" : 8,
+	"Line" : 2,
+	"Column" : 7
+}, {
+	"Module" : "_module",
+	"Name" : "_default",
+	"ParentClass" : null,
+	"SymbolType" : "Class",
+	"Position" : 0,
+	"Line" : 0,
+	"Column" : 0
+}
+]}
+\end{lstlisting}
+
+To implement CodeLens the verb "" was also introduced. 
+
+
+\subsubsection{DafnyDef}
+Github Repository: \href{https://github.com/FunctionalCorrectness/DafnyDef}{https://github.com/FunctionalCorrectness/DafnyDef}
