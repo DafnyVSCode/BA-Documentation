@@ -1,15 +1,58 @@
 \subsection{Dafny VSCode}
-
-
-\subsubsection{Dafny VSCode}
 Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{https://github.com/FunctionalCorrectness/dafny-vscode}
 
-\subsubsection{DafnyServer}
+\subsubsection{Overview}
+\todo{Maybe add a class diagram}
+
+\subsubsection{VSCode Plugin}
+\paragraph{Structure}
+\todo{How is a vscode plugin structured, package.json explaination}
+
+\subsubsection{Extension points}
+
+\paragraph{Statusbar}
+\paragraph{Refactoring}
+\paragraph{CodeLens}
+
+
+\subsubsection{Communication}
+
+\subsubsection{Sytax highlighting}
+
+\subsubsection{Snippets}
+
+\subsubsection{Automatic installation}
+\paragraph{Windows}
+
+\paragraph{Ubuntu}
+
+\paragraph{OSX}
+
+
+\subsection{DafnyServer}
 Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-microsoft}{https://github.com/FunctionalCorrectness/dafny-microsoft}
 
-To support refactorings in the Dafny VSCode plugin, the DafnyServer was extended. A new verb "symbols" was introduced, which returns a json formatted symbol table, of the input file. 
+The DafnyServer is a simple console application which allows proofing Dafny source files. To verify files, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in json format \todo{add reference to source.cs} and is sent base64 encoded. By default the server only supports the verbs verify, quit and selftest. Verbs are sent first followed by a newline \textbackslash{n}. May proceed by a payload and an end string \todo{reference to end string}. 
+Verb explanation: Verify needs a verification task and returns if all proofs holds, quit stops the server and selftest execute some simple verification. 
 
-Example:
+\textbf{Example verification task}
+\begin{lstlisting}[language=json,firstnumber=1]
+{
+	args:[],
+	filename:"c:\Users\Markus\Desktop\dafny\test1.dfy",
+	source:"method Main() {	assert 1 < 3; }",
+	sourceIsFile:false
+}
+
+\end{lstlisting}
+
+\subsubsection{symbols}
+To support refactorings in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their position information needed to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This returns a json formatted symbol table, of the input file. 
+\newline\newline
+\textbf{Request: }
+\todonl{add request}
+\newline\newline
+\textbf{Result: }
 \begin{lstlisting}[language=json,firstnumber=1]
 {[
 {
@@ -40,8 +83,24 @@ Example:
 ]}
 \end{lstlisting}
 
-To implement CodeLens the verb "" was also introduced. 
+\subsubsection{references}
+To support CodeLens in the plugin, it was also necessary to get all method references from a given one. To also allow that the verb "references" was also introduced. This task finds all call statements towards a specified method. This has to be specified in the args argument, with the following information: [moduleName, className, methodName]. 
+\newline\newline
+\textbf{Request: }
+\todonl{add request}
+\newline\newline
+\textbf{Result: }
+\begin{lstlisting}[language=json,firstnumber=1]
+[{
+	"MethodName":"Main3",
+	"Position":226,
+	"Line":18,
+	"Column":8
+}] 
+\end{lstlisting}
 
 
-\subsubsection{DafnyDef}
+\subsection{DafnyDef}
 Github Repository: \href{https://github.com/FunctionalCorrectness/DafnyDef}{https://github.com/FunctionalCorrectness/DafnyDef}
+\todonl{add text}
+
