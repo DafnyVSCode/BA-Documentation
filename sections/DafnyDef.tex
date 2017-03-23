@@ -13,7 +13,7 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 \paragraph{Statusbar}
 \paragraph{Refactoring}
 \paragraph{CodeLens}
-\paragraph{Go to definition}
+
 
 \subsubsection{Communication}
 
@@ -102,77 +102,5 @@ To support CodeLens in the plugin, it was also necessary to get all method refer
 
 \subsection{DafnyDef}
 Github Repository: \href{https://github.com/FunctionalCorrectness/DafnyDef}{https://github.com/FunctionalCorrectness/DafnyDef}
-
-DafnyDef is a simple console application which was added to support various semantic analysis. This was done because the Dafny compiler does not offer any hooks for gaining further insight needed for static code analysis. It was not the scope of this thesis to extend the compiler in a fundamental way, so an approach similar to the GO-Language environment was chosen, were semantic analysis is done via a seperat component called \cite{godef}. \newline
-In order to stay consistent with the Dafny and VS-Code environment, input is sent via standard input and output is obtained via standard output of the process. The input format is structured similary to the input format of Dafny Server and is also written in json format and encoded in base64. Commands are also implemented in terms of supported terms, which at this time are quit, findDefinition and getDefinitions. They are followed by a newline \textbackslash{n}, a payload and an endString \todo{reference to end string}. \newline
-
-
-
-\subsubsection{findDefinition}
-To support the IDE-Feature "go to definition", the command findDefinition was implemented. Its payload consists of a searched for symbol, the path of the file which was open when the command was sent, an optional root directory and if the Dafny Server should be contacted in a mono environment, the path to the mono executable. It then sends requests to the Dafny Server to gain symbol informations about files, starting at the originating file and then either walking the root directory  found in the payload or the directory which the originating file was found in. Once the possible multiple definitions were found, they are returned in a structured way.\newline\newline
-\textbf{Request: }
-\begin{lstlisting}[language=json,firstnumber=1]
-{
-args:[],
-baseDir:"c:\Users\Markus\Desktop\dafny\",
-fileName:"c:\Users\Markus\Desktop\dafny\dafnyTest.dfy",
-monoPath: "mono",
-word: "printReport"
-}
-
-\end{lstlisting}
-
-\textbf{Result: }
-\begin{lstlisting}[language=json,firstnumber=1]
-{[
-{
-"Symbol" : "printReport",
-"FilePath" : "c:\Users\Markus\Desktop\dafny\dafnyTest.dfy",
-"SymbolInfos": [
-	{
-		"Module" : "_module",
-		"Name" : "printReport",
-		"ParentClass" : "Reporter",
-		"SymbolType" : "method",
-		"Position" : 211,
-		"Line" : 34,
-		"Column" : 2
-	},
-	{
-		"Module" : "_specialReporting",
-		"Name" : "printReport",
-		"ParentClass" : "SpecialReporter",
-		"SymbolType" : "method",
-		"Position" : 575,
-		"Line" : 67,
-		"Column" : 34
-	}	
-]
-}, {
-"Symbol" : "printReport",
-"FilePath" : ""c:\Users\Markus\Desktop\dafny\dafnyDefinitions.dfy"",
-"SymbolInfos": [
-	{
-		"Module" : "_module",
-		"Name" : "printReport",
-		"ParentClass" : null,
-		"SymbolType" : "function",
-		"Position" : 1,
-		"Line" : 1,
-		"Column" : 1
-	},
-	{
-		"Module" : "_specialInterfaces",
-		"Name" : "printReport",
-		"ParentClass" : null,
-		"SymbolType" : "function",
-		"Position" : 311,
-		"Line" : 24,
-		"Column" : 1
-	}	
-]
-}
-]}
-\end{lstlisting}
-
+\todonl{add text}
 
