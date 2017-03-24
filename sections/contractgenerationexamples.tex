@@ -1,4 +1,4 @@
-\subsection{Contract generation examples}
+\subsection{Contract generation examples} \label{examples}
 Since Dafny offers built-in specification constructs, a programmer would greatly benefit from generation of contracts for common situations. This chapter first introduces three examples in programming, that could be made safer through the use of contracts. The solution is then generalized in order to be more widely applicable.
 \subsubsection{Example 1: Array access} \label{Example 1}
 
@@ -55,11 +55,11 @@ class BankAccountSafe {
 \end{lstlisting}
 
 
-\subsubsection{Example 3: Domain specific constraints a little more complex} \label{Example 3}
+\subsubsection{Example 3: More complex Domain specific constraints} \label{Example 3}
 \paragraph{Problem:}
 In a skater game, it is possible to do tricks as well as get augmented steel legs. In the adjustment phase of the artificial legs, it should not be possible to do tricks that hold the risk of falling to the ground.
 \paragraph{Solution:}
-Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
+Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 
 \paragraph{Code:}
 \lstset{style=dafny}
@@ -105,7 +105,7 @@ class ProfiSkater {
 \end{lstlisting}
 
 \subsubsection{Underlying problems}
-When the examples above are closer examined, common patterns can be found. This subsection first details three common patterns, after which the next subsections sets them into connections with the problems above.
+When the examples above are closer examined, common patterns can be found. This subsection first details three common patterns. The next subsections sets them into connections with the problems mentioned in \ref{examples}.
 
 \paragraph{Application of partial functions} \label{partial function}
 One of the three problems can be expressed as the application of partial functions, which are defined by the following three objects:
