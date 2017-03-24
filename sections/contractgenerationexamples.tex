@@ -1,5 +1,5 @@
 \subsection{Contract generation examples}
-Since Dafny offers built-in specification constructs, a programmer would greatly benefit from generation of contracts for common situations. This chapter first introduces three examples in programming, that could be made safer through the use of contracts. Then the underlying abstractions are tried to be found, through which the mechanisms can be implemented.  
+Since Dafny offers built-in specification constructs, a programmer would greatly benefit from generation of contracts for common situations. This chapter first introduces three examples in programming, that could be made safer through the use of contracts. The solution is then generalized in order to be more widely applicable.
 \subsubsection{Example 1: Array access} \label{Example 1}
 
 \paragraph{Problem:}
@@ -25,11 +25,11 @@ method FindSafe(a: array<int>, key: int) return (element: int)
 
 
 
-\subsubsection{Example 2: Domain specific constraints} \label{Example 2}
+\subsubsection{Example 2: Simple domain specific constraints} \label{Example 2}
 \paragraph{Problem:}
-A bank wants to digitalize its transaction handling. They don’t want to allow negative balances on any account. A method which modifies the balance may bring it to a negative amount.
+A method that processes withdraws form a bank account may not make a bank balance negative.
 \paragraph{Solution:}
-Generate a pre- and postconditions on methods which modify that field, according to an entry in the DSL configuration.
+Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 
 \paragraph{Code:}
 \lstset{style=dafny}
