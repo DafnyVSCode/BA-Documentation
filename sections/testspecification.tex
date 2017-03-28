@@ -10,58 +10,43 @@ VS Code extensions which require VS Code API can be tested with help of a specia
 To verify that the Dafny VSCode Plugin is working as expected, it has to be properly tested. Therefore exists two possibilities. Either automatic unit / integration tests or manual testing. The best would be to test everything automatically. Unfortunately this is not possible, though the VSCode Test API provides a rich set of methods, but no direct access to the filesystem or to wait for certain tasks to finish. For this reason some tests have to be performed manually, especially use cases which installs Dafny and rely heavily on scripts. On the other side if all automatic tests fail, it's mostly a clear signal that something with the server is not okay. So the automatically tests also verifies if the DafnyServer is working correctly. During development it is also quite easy to verify certain features on the fly. 
 Below you first find what is tested and how, followed by table which explains how the individual use cases are tested and guides for manual testing. 
 
-\subsubsection{Test scope}
-As discussed in the last chapter, that not everything can be easily tested, the test scope has to be restricted. The following table shows which system component tested and how.
+\subsubsection{System Tests}
+As discussed in the last chapter, that not everything can be easily tested, the test scope has to be restricted. The following table shows which system component are tested and how.
 \begin{longtable}{ p{0.3\textwidth} | p{0.2\textwidth} | p{0.4\textwidth} }
-\textbf{System component} & \textbf{Tested} & \textbf{Description}\\
-	Installation of plugin & Manual & Manual installation of Dafny and setting of paths   \\
-	Automatic installation of Dafny & Manual & Easier to validate that all configurations are set correctly \\
+\textbf{Topic} & \textbf{Tested} & \textbf{Description}\\
+	Installation of Dafny Plugin & Manual & Manual installation of Dafny and setting of basepath   \\
+	Automatic installation of Dafny & Manual & Easier to validate that basepath is set correctly and all files exists \\
 	Uninstallation of Dafny & Manual & Verify on filesystem level\\
-	Communication DafnyServer and Plugin & Manual + Automatic & Test if output from DafnyServer is correctly parsed and displayed\\
+	Communication DafnyServer and Dafny Plugin & Manual + Automatic & Test if output from DafnyServer is correctly parsed and displayed\\
 	Restart DafnyServer task & Manual & Check if a new PID is used and the other is stopped\\
 	Local queue & Manual & DafnyServer can be paused in Visual Studio and queueing can be checked \\
-	Syntax highlighting & Manual & Look on our example \\
+	Syntax highlighting & Manual & Look on our examples \\
 	Verification on typing & Manual & Easy to test manually\\
 	Snippets & Manual & Check if snippets are working\\
 	Document Symbol Provider & Automatic & Can be tested with the VSCode API easily \\
 	Hover Provider & Automatic & Can be tested with the VSCode API easily \\
 	Definition Provider & Automatic & Can be tested with the VSCode API easily  \\
 	Code Lens & Automatic & Can be tested with the VSCode API easily \\
+	Automatic generation of contracts & Manual & \todo{add desc} \\
+	Autocompletion for identifiers & Automatic & \todo{add desc} \\
+	Reporting of Dafny best practices violations & Manual & \todo{add desc} \\
 \end{longtable}
-All the automatic tests also tests if the DafnyServer and DafnyDef are communicate correctly with each other. 
+All automatic tests also check if the DafnyServer and DafnyDef are communicating correctly with each other.
 
 
-\subsubsection{Use Case Tests}
-\begin{longtable}{ p{0.4\textwidth} | p{0.6\textwidth} }
-	\textbf{Use Case} & \textbf{Verify}\\
-	UC1: Easy installation of Dafny plugin\newline & 
-		The language dafny is available\newline 
-		.dfy files are associated with the dafny plugin\newline
-		The server is started\newline
-		The status is changed after the file have been checked\newline
-		If the server crashes, this is reported and the server is restarted\newline
-		The plugin automatically downloads and installs dafny\newline
-		Sets the dafny server path \newline
-		Shows a message if .Net framework or mono is missing
-	\\
-	UC2: Syntax Highlighting & 
-		Syntax is highlighted
-	\\
-	UC3: Reporting of Dafny best practices violations &
-		\todo{?}
- 	\\
-	UC4: Automatic generation of contracts & \todo{Invariant: Require and ensures are generated?} \\
-	UC5: Autocompletion for identifiers & 
-		Autocompletion is working for all known dafny identifiers\newline
-		Methods are considered for autocompletion as well
-		
-	
-	\\
-\end{longtable}
+\subsubsection{Basic tests}
+If the Dafny Plugin is installed, the following is expected inside VSCode. 
+\begin{itemize}
+\item The Dafny language is available
+\item .dfy is associated with the Dafny Plugin
+\item Asks to install Dafny, if no DafnyServer is found 
+\item Starts the DafnyServer if a .dfy is opened
+\item Verification status of a .dfy file is shown
+\item Assertion errors are reported
+\end{itemize}
 
-
-\subsubsection{UC1}
-The following steps have to be walked trough, to see if the plugin works as expected:
+\subsubsection{Detailed manual tests}
+The following paragraphs explains how a certain feature can be tested manually, which steps have to be performed and what the expected result should be.
 
 \paragraph{Manual installation}
 \textbf{\newline Steps:}
@@ -92,10 +77,33 @@ The server should start first and afterwards the status should display "Verifiyi
 	\item Open the file simpleTest.dfy
 	\item The server should be started and the file verified
 	\item Kill the DafnyServer process
-	
 \end{enumerate}
 \textbf{\newline Expected:}
 The server should be restarting automatically, with corresponding messages inside VSCode. 
+
+
+\paragraph{Local queue}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Open the file simpleTest.dfy
+	\item The server should be started and the file verified
+	\item Open VisualStudio and attach the debugger to the DafnyServer process
+	\item Set a breakpoint in the verify method
+	\item Change a assert in the simpleTest.dfy 
+	\item VisualStudio should break at the breakpoint
+	\item Open more files
+\end{enumerate}
+\textbf{\newline Expected:}
+The queue size should be getting bigger and bigger as new files are opened. After the breakpoint is removed and the debugger detached the queue size should decreasing. 
+
+\paragraph{Verification on typing}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Open the file simpleTest.dfy
+	\item Change a assert that it does not hold (in under 0.7 seconds)
+\end{enumerate}
+\textbf{\newline Expected:}
+After 0.7 seconds (default value) the file should be verified and the error should be displayed 
 
 \paragraph{Automatic installation}
 \textbf{\newline Steps:}
@@ -109,15 +117,25 @@ The server should be restarting automatically, with corresponding messages insid
 Dafny should be downloaded, extracted, started and the file verified. See UC1, UC2, UC3 Expected
 
 
-\paragraph{UC2}
-Syntax Highlighting won't be directly tested. All our test programs have been reviewed that the syntax highlighting looks fine.  
+\paragraph{Uninstallation}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Uninstall the Server with "Dafny: Uninstall DafnyServer" task
+\end{enumerate}
+\textbf{\newline Expected:}
+Dafny should be uninstalled from the system. /home/.Dafny or \%AppData\%/Roaming/Dafny should be empty.
 
-\paragraph{UC3}
-\todo{Has to be defined}
+
+\paragraph{Snippets}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Open the source code file snippets/dafny.json and remember a prefix from the list
+	\item Enter the prefix 
+	\item Press Enter
+\end{enumerate}
+\textbf{\newline Expected:}
+The snippet should be inserted and can be edited
 
 
-\paragraph{UC4}
-\todo{Has to be defined}
-
-\paragraph{UC5}
+\paragraph{Autocompletion for identifiers}
 Autocompletion can be tested with the VSCode Test API. Therefore a file is loaded with a set of methods. Afterwards some test check if the existing methods are considered for autocompletion. Additionally more refactoring tests will be performed under this use case. 
