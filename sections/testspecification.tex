@@ -5,10 +5,8 @@ Visual Studio Code plugins can be tested with standard javascript testing framew
 
 
 \subsubsection{Integration Tests}
-VS Code extensions which require VS Code API can be tested with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like creating a new file, entering a character, using auto-completion and verifing if the extension works as expected. Therefore  
+VS Code extensions which require VS Code API can be tested with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like creating a new file, entering a character, using auto-completion and verifing if the extension works as expected.   
 
-
- 
 
 \subsubsection{System Tests}
 
@@ -43,3 +41,70 @@ VS Code extensions which require VS Code API can be tested with help of a specia
 	
 	\\
 \end{longtable}
+
+
+\subsubsection{Test process}
+To verify that all use cases are working as expected, it was first considered to automate this process with help of the VSCode Test API. Unfortunately to test and verify UC1, UC2, UC3 and UC4 is almost impossible, without access to the filesystem directly and to wait for a download to complete. Therefore they have to be tested manually. 
+\subsubsection{UC1, UC2, UC3}
+The following steps have to be walked trough, to see if the plugin works as expected:
+
+\paragraph{Manual installation}
+\textbf{\newline Steps:}
+\begin{enumerate}
+\item Uninstall the plugin and remove Dafny (/home/.Dafny or \%AppData\%/Roaming/Dafny)
+\item Remove the entry "dafny.basePath" from the user configuration file 
+\item Restart VSCode - There should be an error that Dafny is not installed
+\item Install Dafny from \href{https://github.com/FunctionalCorrectness/dafny-microsoft/releases}{https://github.com/FunctionalCorrectness/dafny-microsoft/releases}
+\item Set "dafny.basePath" to the extracted archive location
+\item Open the file simpleTest.dfy
+\item Execute "Dafny: RestartServer" task
+\end{enumerate}
+\textbf{\newline Expected:}
+The DafnyServer should be started and the file verified. This can be seen from the statusbar. On the right side, there should be the PID of the DafnyServer and on the left side the status "Verified"
+
+\paragraph{Status change}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Open the file invalidAsserts.dfy
+
+\end{enumerate}
+\textbf{\newline Expected:}
+The server should start first and afterwards the status should display "Verifiying". After the DafnyServer verified the program, the status should have been changed to "Not Verified" and multiple asserts are marked red. 
+
+\paragraph{Server crash}
+\textbf{\newline Steps:}
+\begin{enumerate}
+	\item Open the file simpleTest.dfy
+	\item The server should be started and the file verified
+	\item Kill the DafnyServer process
+	
+\end{enumerate}
+\textbf{\newline Expected:}
+The server should be restarting automatically, with corresponding messages inside VSCode. 
+
+
+\subsubsection{UC4}
+To make sure that the automatic installation works, the following steps have to be performed: 
+\textbf{\newline Steps:}
+\begin{enumerate}
+\item Uninstall the Server with "Dafny: Uninstall DafnyServer" task
+\item Restart VSCode - There should be an error that Dafny is not installed
+\item Open the file simpleTest.dfy
+\item Install Dafny with the task "Dafny: Install DafnyServer" 
+\end{enumerate}
+\textbf{\newline Expected:}
+Dafny should be downloaded, extracted, started and the file verified. See UC1, UC2, UC3 Expected
+
+
+\paragraph{UC5}
+Syntax Highlighting won't completely tested. All our test programs have been reviewed that the syntax highlighting looks fine.  
+
+\paragraph{UC6}
+\todo{Has to be defined}
+
+
+\paragraph{UC7}
+\todo{Has to be defined}
+
+\paragraph{UC8}
+Autocompletion can be tested with the VSCode Test API. Therefore a file is loaded with a set of methods. Afterwards some test check if the existing methods are considered for autocompletion. Additionally more refactoring tests will be performed under this use case. 
