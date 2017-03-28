@@ -3,38 +3,55 @@
 \subsubsection{Unit Tests}
 Visual Studio Code plugins can be tested with standard javascript testing frameworks like Mocha or Jasmine, if they don't use any features of Visual Studio Code itself. This allows to test core logic without the need to run tests inside VS Code.
 
-
 \subsubsection{Integration Tests}
 VS Code extensions which require VS Code API can be tested with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like creating a new file, entering a character, using auto-completion and verifing if the extension works as expected.   
 
+\subsubsection{Test overview}
+To verify that the Dafny VSCode Plugin is working as expected, it has to be properly tested. Therefore exists two possibilities. Either automatic unit / integration tests or manual testing. The best would be to test everything automatically. Unfortunately this is not possible, though the VSCode Test API provides a rich set of methods, but no direct access to the filesystem or to wait for certain tasks to finish. For this reason some tests have to be performed manually, especially use cases which installs Dafny and rely heavily on scripts. On the other side if all automatic tests fail, it's mostly a clear signal that something with the server is not okay. So the automatically tests also verifies if the DafnyServer is working correctly. During development it is also quite easy to verify certain features on the fly. 
+Below you first find what is tested and how, followed by table which explains how the individual use cases are tested and guides for manual testing. 
 
-\subsubsection{System Tests}
+\subsubsection{Test scope}
+As discussed in the last chapter, that not everything can be easily tested, the test scope has to be restricted. The following table shows which system component tested and how.
+\begin{longtable}{ p{0.3\textwidth} | p{0.2\textwidth} | p{0.4\textwidth} }
+\textbf{System component} & \textbf{Tested} & \textbf{Description}\\
+	Installation of plugin & Manual & Manual installation of Dafny and setting of paths   \\
+	Automatic installation of Dafny & Manual & Easier to validate that all configurations are set correctly \\
+	Uninstallation of Dafny & Manual & Verify on filesystem level\\
+	Communication DafnyServer and Plugin & Manual + Automatic & Test if output from DafnyServer is correctly parsed and displayed\\
+	Restart DafnyServer task & Manual & Check if a new PID is used and the other is stopped\\
+	Local queue & Manual & DafnyServer can be paused in Visual Studio and queueing can be checked \\
+	Syntax highlighting & Manual & Look on our example \\
+	Verification on typing & Manual & Easy to test manually\\
+	Snippets & Manual & Check if snippets are working\\
+	Document Symbol Provider & Automatic & Can be tested with the VSCode API easily \\
+	Hover Provider & Automatic & Can be tested with the VSCode API easily \\
+	Definition Provider & Automatic & Can be tested with the VSCode API easily  \\
+	Code Lens & Automatic & Can be tested with the VSCode API easily \\
+\end{longtable}
+All the automatic tests also tests if the DafnyServer and DafnyDef are communicate correctly with each other. 
 
+
+\subsubsection{Use Case Tests}
 \begin{longtable}{ p{0.4\textwidth} | p{0.6\textwidth} }
-	\textbf{Testcase} & \textbf{Verify}\\
-	UC1: Windows Installation\newline 
-	UC2: Linux Installation\newline 
-	UC3: OSX Installation & 
+	\textbf{Use Case} & \textbf{Verify}\\
+	UC1: Easy installation of Dafny plugin\newline & 
 		The language dafny is available\newline 
 		.dfy files are associated with the dafny plugin\newline
 		The server is started\newline
 		The status is changed after the file have been checked\newline
-		If the server crashes, this is reported and the server is restarted
-	\\
-	UC4: Easy installation of Dafny plugin & 
+		If the server crashes, this is reported and the server is restarted\newline
 		The plugin automatically downloads and installs dafny\newline
 		Sets the dafny server path \newline
 		Shows a message if .Net framework or mono is missing
 	\\
-	UC5: Syntax Highlighting & 
+	UC2: Syntax Highlighting & 
 		Syntax is highlighted
 	\\
-	UC6: Reporting of Dafny best practices violations &
+	UC3: Reporting of Dafny best practices violations &
 		\todo{?}
-	
  	\\
-	UC7: Automatic generation of contracts & \todo{Invariant: Require and ensures are generated?} \\
-	UC8: Autocompletion for identifiers & 
+	UC4: Automatic generation of contracts & \todo{Invariant: Require and ensures are generated?} \\
+	UC5: Autocompletion for identifiers & 
 		Autocompletion is working for all known dafny identifiers\newline
 		Methods are considered for autocompletion as well
 		
@@ -43,9 +60,7 @@ VS Code extensions which require VS Code API can be tested with help of a specia
 \end{longtable}
 
 
-\subsubsection{Test process}
-To verify that all use cases are working as expected, it was first considered to automate this process with help of the VSCode Test API. Unfortunately to test and verify UC1, UC2, UC3 and UC4 is almost impossible, without access to the filesystem directly and to wait for a download to complete. Therefore they have to be tested manually. 
-\subsubsection{UC1, UC2, UC3}
+\subsubsection{UC1}
 The following steps have to be walked trough, to see if the plugin works as expected:
 
 \paragraph{Manual installation}
@@ -82,9 +97,7 @@ The server should start first and afterwards the status should display "Verifiyi
 \textbf{\newline Expected:}
 The server should be restarting automatically, with corresponding messages inside VSCode. 
 
-
-\subsubsection{UC4}
-To make sure that the automatic installation works, the following steps have to be performed: 
+\paragraph{Automatic installation}
 \textbf{\newline Steps:}
 \begin{enumerate}
 \item Uninstall the Server with "Dafny: Uninstall DafnyServer" task
@@ -96,15 +109,15 @@ To make sure that the automatic installation works, the following steps have to 
 Dafny should be downloaded, extracted, started and the file verified. See UC1, UC2, UC3 Expected
 
 
+\paragraph{UC2}
+Syntax Highlighting won't be directly tested. All our test programs have been reviewed that the syntax highlighting looks fine.  
+
+\paragraph{UC3}
+\todo{Has to be defined}
+
+
+\paragraph{UC4}
+\todo{Has to be defined}
+
 \paragraph{UC5}
-Syntax Highlighting won't completely tested. All our test programs have been reviewed that the syntax highlighting looks fine.  
-
-\paragraph{UC6}
-\todo{Has to be defined}
-
-
-\paragraph{UC7}
-\todo{Has to be defined}
-
-\paragraph{UC8}
 Autocompletion can be tested with the VSCode Test API. Therefore a file is loaded with a set of methods. Afterwards some test check if the existing methods are considered for autocompletion. Additionally more refactoring tests will be performed under this use case. 
