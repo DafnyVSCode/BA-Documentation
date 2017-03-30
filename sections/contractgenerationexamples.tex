@@ -57,7 +57,7 @@ class BankAccountSafe {
 
 \subsubsection{Example 3: More complex Domain specific constraints} \label{Example 3}
 \paragraph{Problem:}
-In a skater game, it is possible to do tricks as well as get augmented steel legs. In the adjustment phase of the artificial legs, it should not be possible to do tricks that hold the risk of falling to the ground.
+A factory wants to model its processes. Their services consist of refining certain rawmaterials, which can interact aggressively with their machines. They have two types of machines, some which are subject to abreason over time, but also others which are very expensive and should not come into contact with aggressive materials. They want to make sure no aggressive materials come in contact with expensive machines under any circumstances.
 \paragraph{Solution:}
 Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 
@@ -65,47 +65,50 @@ Generate a pre- and postconditions on methods which modify relevant fields, acco
 \lstset{style=dafny}
 \begin{lstlisting}
 
-class Trick {
-	var isTooHard: bool;
-	method do() {
+class RawMaterial {
+	var abreasesMachines: bool;
+}
+
+class NormalMachine {
+	var prestine: bool;
+	constructor() modifies this {
+		this.prestine := true;
+	}
+	method refineMatieral(material: RawMaterial) {
 		...
 	}
-}
-
-class NormalSkater {
-	var fell: bool;
-	
-	method doTrick(trick: Trick) 
-		requires trick != null
+	method processMaterial(material: RawMaterial) 
+		requires material != null
 	modifies this {
-		this.fell := false;
-		trick.do();
-		if(trick.isTooHard) {
-			this.fell := true;
-		}
+		this.refineMatieral(material);
+		this.prestine := !material.abreasesMachines;
 	}
 }
 
-class ProfiSkater {
-	var fell: bool;
+class ExpensiveMachine {
+	var prestine: bool;
+	constructor() modifies this {
+		this.prestine := true;
+	}
 	
-	method doTrick(trick: Trick) 
-		requires trick != null
-		requires !trick.isTooHard
-		ensures !fell
+	method refineMatieral(material: RawMaterial) {
+	
+	}
+	
+	method processMaterial(material: RawMaterial) 
+		requires material != null
+		requires !material.abreasesMachines
+		ensures prestine
 	modifies this {
-		this.fell := false;
-		trick.do();
-		if(trick.isTooHard) {
-			this.fell := true;
-		}
+		this.refineMatieral(material);
+		this.prestine := !material.abreasesMachines;
 	}
 }
-
 \end{lstlisting}
 
 \subsubsection{Underlying problems}
-When the examples above are closer examined, common patterns can be found. This subsection first details three common patterns. The next subsections sets them into connections with the problems mentioned in \ref{examples}.
+All three examples have in common, that without the correct preconditions they should result in proof obligations which cannot be proven.
+This subsection first details three common concepts that occur when reasoning about proof obligations. The next subsections sets them into connections with the problems mentioned in \ref{examples}.
 
 \paragraph{Application of partial functions} \label{partial function}
 One of the three problems can be expressed as the application of partial functions, which are defined by the following three objects:
@@ -122,7 +125,7 @@ An Invariant can be defined as follows: A quantity which remains unchanged under
 \newline An Invarant is therefor extremly useful when one wants to ensure certain conditions of an object, which must hold at all times. If an invariant is to be applied to an object with multiple attributes, it is usually defined as a postconditions on all attributes. 
 
 \paragraph{Non provable Goals} \label{non provable goal}
-These are situations, that are impossible to prove, because some preconditions do not hold or not sufficent information is available. They are very hard to detect and isolate from provable goals, although some work has found solutions under certain restrictions, for instance \cite{goals}. When an unprovable goal is encountered in a context, it is much easier to simply state is as a precondition for the context to be valid, thus burdening the calling context to ensure the goal holds. 
+These are situations, that are impossible to prove, because some preconditions do not hold or not sufficent information is available. They are very hard to detect and isolate from provable goals, although some work has found solutions under certain restrictions, for instance \cite{goals}. When an unprovable goal is encountered in a context, it is much easier to simply state it as a precondition for the context to be valid, thus burdening the calling context with ensuring that the goal holds. 
 
 \subsubsection{Solving the problems in an abstract way}
 This subsection finally shows how the patterns detailed above can be used to solve the programming examples, thus allowing generic solutions for many similar problems.
@@ -138,10 +141,12 @@ The second pattern discussed in \nameref{invariants} best describes the semantic
 The third pattern, discussesd in \nameref{non provable goal}, works very well in conjunction with the second one. All sub goals that should hold that the invariant holds, in this case that the amount should be smaller than the balance, can be viewed as unprovable goals in this context. They can be therefor be formulated as preconditions such that the caller has the burden of applying correct arguments to the function. This practice isolates the parts which could break the invariant, allowing to write the function as safe as possible.
 
 \paragraph{Problem 3}
-The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let a skater fall, therefor only allowing tricks that or on pair with his skill. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value false on the toHard property of a trick. However, if we extend the hierarchy of tricks and implement the calculation of tooHard differently, it is unclear if all cases could be computet efficiently. \newline
-The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an Invariant, that the fell property on the skater is always false. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \nameref{Problem 2} \newline
-The third pattern could be much in the same way as in \nameref{Problem 2}. The condition, that the trick may never be tooHard, can be written as a preconditions and together with the usage of invariants holds the greates amount of security regarding the domain constraints.
+The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let an expensive machine be subjected to abreason, therefore only allowing non-aggressive rawmaterials as input. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value true on the abreasesMachines property of a rawmaterial. However, if we extend the hierarchy of materials and implement the calculation of abreasesMachines differently, it is unclear if all cases could be computet efficiently. \newline
+The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an Invariant, that the prestine property on the expensive machine is always true. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \nameref{Problem 2} \newline
+The third pattern could be much in the same way as in \nameref{Problem 2}. The condition, that the raw material may never abrease machines, can be written as a preconditions and together with the usage of invariants holds the greates amount of security regarding the domain constraints.
 
 \subsubsection{Conclusion}
 As the discussion above shows, all of the three problems can be solved through the application of \nameref{invariants} and \nameref{non provable goal}. They make it unnecessary to solve the problems of \nameref{partial function}, which is often harder to do. All occurences where such a computation would be needed can be seen as non provable goals and stated as preconditions for a method. The usage of invariants offers a syntactical  transparent way of describing domain specific rules, and the implementation is a relativ simple one, as it just is translated into postconditions for all methods of an object. Together these two techniques offer solutions to many different problems in computer science, since they operate on a high abstraction while still being syntactical transparent.\newline 
+In the first example, the language itself has enough domain knowledge in order to generate the unprovable proof obligations by itself, since it knows about the array type and its restrictions. In the two other cases the language  needs more domain knowledge in order to generate the unprovable proof obligations. As was shown above, invariants are a good way of providing this domain knowledge.
+Once the unprovable proof obgligations can be found, they can be used as hints for preconditions that can be suggested to the programmer.\newline
 The hardest part of the implementation is the identification of non provable subgoals that are in relation to an invariant. To do this, detailed knowledge has to be available of the control flow of a program and all possible outcomes of a computation have to be considered, although the problem can be relaxed if one allows for false positives in the identification of non provable subgoals. Since the plugin only offers refactorings and does not apply them automatically, the programmer still can decide if the setting of the non provable goal as precondition is necessary.  
