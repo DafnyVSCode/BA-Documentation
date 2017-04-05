@@ -1,4 +1,4 @@
-\subsection{Language Server}
+\subsubsection{Language Server}
 
 VS-Code Plugins can be implemented in two ways: the first one is via the standard VS-CODE API and the second one is in form of a language server. Language servers follow a standard protocol to provide services for working with different programming languages and offer often used features such as go to definition. While this offers great portability and easy integration with other IDEs or tools that work with language server, the implementation as a language server was rejected in this project. \newline
 The main reason is that the project extends an existing plugin, which was already built around the standard VS-CODE API. After a phase of research and writing a small prototype it was decided that rewriting the plugin as a language server was not a feasable in regard to the work needed to be done compared to the project scope. \newline
