@@ -1,4 +1,7 @@
-\subsection{Codelenses} \label{codelenses}
+\subsection{Features} \label{features}
+This chapter details the different features that were implemented during the project. They are mostly language agnostic features that were implemented according to the language server protocol to offer a richer IDE experience. 
+
+\subsubsection{Codelenses} \label{codelenses}
 Codelenses are visual studio code features which is also common to many other IDEs. The idea is to display metainformation about certain pieces of codes, for instance classes and methods. In visual studio code this is done  by adding an additional line of text to the editor whereever a code lense should  be placed. \newline
 
 Since this can be used to quickly gain a deeper understanding of a codebase, it was decided to integrate this feature. Another reason was that it is widespread in different IDEs, so that programmers have become acostumed to it. \newline
@@ -23,7 +26,7 @@ A second consideration was which information should be displayed in the codelens
 The only challenging aspect when implementing this feature is that references can't be determined via a simple text search, since different classes could have member with the same name. To only display unambiguous references, the search has to be done via the fully qualified domain name of the symbol. Since information about references is needed often, all references are determined by the DafnyServer and returned together with the symbolinformation to the symbolservice. This allows for simple processing in the language server itself and the references are updated in real time, since the symbolservice refreshes the symbols for a file when it is changed. Off course also the filepath belonging to the file in which the reference occurs is returned by the symbolservice. This is needed when a reference is a file external to the defining one and the go to reference command is invoked.\newline
 When given locations of the references, it is possible to let visual studio code highlight them in the preview window which opens when a codelens is expanded. Visual studio code also groups references according to the filepath in the location, so the programmer gets to see a map of all references ordered by containing file to the right of preview window and can quickly navigating to them.
 
- \subsection{Code Completion} \label{codecompletion}
+ \subsubsection{Code Completion} \label{codecompletion}
  Code completion has become a standard feature for IDEs. Microsoft calls it Intellisense in its products. It enables programmers to rapidly write code without having to keep all definitions in mind. Usually, when the programmer starts typing, a little popup appears where the programmer can choose options that complete the code he is currently writing. \newline
  
  Since this is arguably one of the most helpful features in IDEs, the implementation thereof was paramount to the completion of this project. \newline
@@ -48,7 +51,7 @@ When given locations of the references, it is possible to let visual studio code
 
 The implementation is straightforward, as the symbol service already provides ways to resolve the fully qualified name of an expression and if it as an alias for an element of a class, all therein defined methods and fields can simply be collected. The method and field symbols in the symbol services also contain all additional information which is displayed in the popup. Possible improvements in the completion feature would be support of built in methods and functions and also offer context aware completion when the programmer starts to type an identifier. 
 
-\subsection{Go to Definition} \label{gotodefinition}
+\subsubsection{Go to Definition} \label{gotodefinition}
 Another common feature in modern IDEs is go to definition. It enables the programmer to quickly jump to the definition of a code element he is currently working with to gain further insight about it. This can usually be done either via hotkey for the current cursor position or an option when opening the context menu via a right click, Visual Studio Code offers both ways.\newline
 Since, similar to code lenses, this is a feature which is elemental to all modern IDEs and provides great overview over a project, the implementation of this feature had a high priority in this project. \newline
  \begin{figure}[H]
@@ -69,7 +72,7 @@ Visual Studio Code offers to options when searching for definitions, either go t
 Extensions to this feature could be a context aware heuristic when a fully qualified name cannot be determined where for instance the current and nearby files are preferred when searching for definitions. Also, when polymorphism comes into play and the actual implementation cannot be determined, at the current state the first possibility is returned. The could be enhanced by offering all possible definitions.
 
 
-\subsection{Rename Element} \label{renameelement}
+\subsubsection{Rename Element} \label{renameelement}
 Rename element is a feature essential to refactoring. It is widespread in IDEs and allows to quickly make code better readable Visual Studio Code offers built in support for renaming either via a hotkey or the context menu. \newline
 Because of its importance in refactoring, which is one of the most important tasks when programming, implementing this feature belongs to the core scope of this project. \newline
 The language server protocol, as with many other features, offers a request for renaming with the URI of the file in which the command was invoked and the position belonging to the command. Additionally, the new name the element should have is also given as an argument. The protocol expects a collection of textedit commands, which entail an URI of file, and ranges in that file which should be replaced with a word. \newline
@@ -82,7 +85,8 @@ As often with the language server protocol, the first step when implementing the
  \end{figure}
 Since this feature acutally changes code that is worked with, the implementation must be very robust and failsafe. Thus, it was implemented very defensive. It the location of a requested renaming cannot be resolved to a meaningful word, the request is ended without dictating any changes. The same hold if a word can resolved, but it cannot be matched to a fully qualified name. In this case, possible references could be ambigious, so no action should be taken. To further limit the possibility for failure, the scope for this feature is very small. The current stand only allows for renaming of class members susch as fileds and methods, since these can be resolved with absolute certainty.\newline
 When extending this feature, if would be benefical to also be able to rename local variables for instance. To do this, the symbol informtation which the DafnyServer returns to the symbol service would have to be enriched with detailed scope information to allow being able to exactly say which regions are prone to renamings and which are not. 
-\subsection{Quick Fixes} \label{quickfixes}
+
+\subsubsection{Quick Fixes} \label{quickfixes}
 Quick Fixes are a versaile feature in IDEs which basically allow to do any manipulation to code. Usually they are offered as reactions to diagnostics which were provided earlier. A simple example would be implementing a spell checker this way, offering to replace a wrongly written word with the correct spelling. \newline
 Since this feature has no clear implementation guideline, and the plugin designer can implement almost anything that he likes this way, this was an obvious place to implement Dafny specific feature in the plugin. \newline
 They this works in Visual Studio Code is, when the diagnostic stage for the file has been completed, where all things such as compiler warnings or custom warnings are generated,  a new request is fired at the language server. This request holds a collection of all diagnostics on the current file and the the language is free to either do nothing are provide commands for some diagnostics in the collection which often aime to resolve the shortcomings detailed by the diagnostic. \newline
@@ -121,4 +125,4 @@ Also the search for the insertion position works very similary. It then inserts 
 	\caption{The precondition has been added}
 	\label{fig:nullcheckapplied}
 \end{figure}
-At the current stand, only these two code fixes are implemented, the possible extensions are legion. 
+At the current stand, only these two code fixes are implemented, the possible extensions are legion. One which comes to mind is to inspect diagnostics that warn when an index may be out of bound and generate preconditions to satisfy constraints regarding the index. \newline
