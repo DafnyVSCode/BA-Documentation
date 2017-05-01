@@ -17,7 +17,7 @@ Postgres
 
 \subsection{Continuous Integration}
 
-To ensure that the code quality is high and the code is working as expected, all commits trigger automated builds of the respective project. A commit to the documentation repository executes a job which creates a file out of the \LaTeX sources. This document is then copied to the \emph{wwwroot} directory, which then can be downloaded from the project homepage. Commits to the vscode-dafny repository will result in a build and a complete run of all tests on the three environments afterwards. Therefore remote agents are installed on Ubuntu and OSX , which test the plugin on these operation system.  Additionally SonarQube is used to find bugs and bad pratices as early as possible. The last repository which triggers a bamboo job is the project homepage. The latest version is built and deployed when a commit is performed. 
+To ensure that the code quality is high and the code is working as expected, all commits trigger automated builds of the respective project. A commit to the documentation repository executes a job which creates a file out of the \LaTeX sources. This document is then copied to the \emph{wwwroot} directory, which then can be downloaded from the project homepage. Commits to the vscode-dafny repository will result in a build and a complete run of all tests on the three environments afterwards. Therefore remote agents are installed on Ubuntu and OSX , which test the plugin on these operation system.  Additionally SonarQube is used to find bugs and bad practices as early as possible. The last repository which triggers a bamboo job is the project homepage. The latest version is built and deployed when a commit is performed. 
 
 
 \begin{figure}[H]

@@ -1,11 +1,11 @@
 \subsection{Language Server}
 
 VS-Code Plugins can be implemented in two ways: the first one is via the standard VS-CODE API and the second one is in form of a language server. Language servers follow a standard protocol to provide services for working with different programming languages and offer often used features such as go to definition. While this offers great portability and easy integration with other IDEs or tools that work with language server, the implementation as a language server was rejected in this project. \newline
-The main reason is that the project extends an existing plugin, which was already built around the standard VS-CODE API. After a phase of research and writing a small prototype it was decided that rewriting the plugin as a language server was not a feasable in regard to the work needed to be done compared to the project scope. \newline
+The main reason is that the project extends an existing plugin, which was already built around the standard VS-CODE API. After a phase of research and writing a small prototype it was decided that rewriting the plugin as a language server was not a feasible in regard to the work needed to be done compared to the project scope. \newline
 A second consideration when making this decision was that the usage of language servers in VS-CODE plugins is very sparse at the moment. The big language integrations like typescript or javascript do not implement their plugins as language servers, while the golang plugin offers experimental support at this time. The not wide spread usage in this environment was therefore another reason to not implement a language server.
 
 
-Server here refers to the Language Server and not the DafnyServer. The later one is explictily written as DafnyServer.
+Server here refers to the Language Server and not the DafnyServer. The later one is explicitly written as DafnyServer.
 
 \subsubsection{Communication Types}
 There are two different types to communicate between the client and the server. It's either a notification or a request. 
@@ -60,7 +60,7 @@ This informs the client that the verification of the DafnyServer has failed or t
 \subsubsection{Diagnostics Server $\longrightarrow$ Client}
 
 \textbf{sendDiagnostics}
-After a file has been verified the output is analysed and errors are sent as diagnostics to the client. They contains also the message or even related locations, where the errors is coming from.  \newline
+After a file has been verified the output is analyzed and errors are sent as diagnostics to the client. They contains also the message or even related locations, where the errors is coming from.  \newline
 
 \subsubsection{Notification Client $\longrightarrow$ Server}
 

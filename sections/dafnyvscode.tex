@@ -6,7 +6,7 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 
 \subsection{VSCode Plugin}
 \subsubsection{Structure}
-\todo{How is a vscode plugin structured, package.json explaination}
+\todo{How is a vscode plugin structured, package.json explanation}
 
 
 \input{sections/languageserver}
@@ -56,7 +56,7 @@ Verb explanation: Verify needs a verification task and returns if all proofs hol
 \end{lstlisting}
 
 \subsubsection{symbols}
-To support refactorings in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their information about position, reference and usage have to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This collects various information about the SymbolTable of the input file and returns it as json. 
+To support refactoring in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their information about position, reference and usage have to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This collects various information about the SymbolTable of the input file and returns it as json. 
 \newline\newline
 \textbf{Request: }
 
@@ -197,7 +197,7 @@ The command returns the version of the DafnyServer.
 \subsection{Dafny}
 
 \subsubsection{Unicode}
-Dafny would support the following unicode characters: 
+Dafny would support the following Unicode characters: 
 
 \rowcolors{2}{gray!25}{white}
 \begin{longtable}[H]
@@ -230,7 +230,7 @@ The eclipse project \href{https://projects.eclipse.org/projects/technology.lsp4e
 
 It is built on top of \href{https://github.com/eclipse/lsp4j}{LSP4J} a java implementation of the language server protocol. 
 \newline
-Integrating the VSCode Dafny language server into eclipse could became possible in the future. Right know there is no way to interact on the client side as well. You only can specify a language server based on a program (NodeJS) and arguments (extension.js) which is executed and used for querying information. You can't add any behaviour to Eclipse itself, which would be necessary for certain features. Also the sendRequest isn't implemented yet (Commit: 1615e07), which is important for starting the DafnyServer correctly. 
+Integrating the VSCode Dafny language server into eclipse could became possible in the future. Right know there is no way to interact on the client side as well. You only can specify a language server based on a program (NodeJS) and arguments (extension.js) which is executed and used for querying information. You can't add any behavior to Eclipse itself, which would be necessary for certain features. Also the sendRequest isn't implemented yet (Commit: 1615e07), which is important for starting the DafnyServer correctly. 
 The better way would be to program a new eclipse plugin, based on LSP4J which then would also allow to customize the statusbar, run scripts and show progress information. 
 
 

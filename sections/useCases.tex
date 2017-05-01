@@ -35,7 +35,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	Preconditions &\begin{itemize}
 		\item Depending on the environment, either the .NET or the mono framework are installed.
 		\item Visual Studio Code is installed.
-		\item The programmer has admin priviledges in his environment.
+		\item The programmer has admin privileges in his environment.
 	\end{itemize}\\ \hline
 	Postconditions & 
 	\begin{itemize}
@@ -48,10 +48,10 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	4. The plugin then installs itself via the standard Visual Studion Code plugin mechanisms. \newline
 	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\ \hline
 	Extensions & 
-	2a. The installer can't find, depending on the enviroment, either the mono or the .Net framework in the standard locations. \newline 
+	2a. The installer can't find, depending on the environment, either the mono or the .Net framework in the standard locations. \newline 
 	- It prompts the user to enter the location and does so until the framework is found. \\ \hline
 	Special Requirements & None\\ \hline
-	Frequency of Occurence & Usually once per working environment\\ \hline
+	Frequency of Occurrence & Usually once per working environment\\ \hline
 	Open Issues & None \\ \hline
 	\caption{UC1}
 \end{longtable}
@@ -69,16 +69,16 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\end{itemize}\\ \hline
 	Postconditions &
 	\begin{itemize}
-		\item The source code is highlighted in different colors according to common standards in general and the Visiual Studio Code guidelines specifically.
+		\item The source code is highlighted in different colors according to common standards in general and the Visual Studio Code guidelines specifically.
 	\end{itemize}\\ \hline
 	Main Success Scenario & 
 	1. Programmer types code into a .dfy file. \newline
-	2. The plugin detects the changes and applies syntax highighlighting through the standard Visual Studio Code mechanisms.\\ \hline
+	2. The plugin detects the changes and applies syntax highlighting through the standard Visual Studio Code mechanisms.\\ \hline
 	Extensions & 
 	2a. The newly written code causes a compilation error and cannot be interpreted. \newline 
 	- The previous syntax highlighting stays in place, the errors are highlighted according to common practices with compilation errors in Visual Studio Code. \\ \hline
 	Special Requirements & None\\ \hline
-	Frequency of Occurence & Very often, after every key up event.\\ \hline
+	Frequency of Occurrence & Very often, after every key up event.\\ \hline
 	Open Issues & None \\ \hline
 	\caption{UC2}
 \end{longtable}
@@ -99,7 +99,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 		\item Violations of common best practices for Dafny are reported through the standard Visual Studio Code mechanisms.
 	\end{itemize}\\ \hline
 	Main Success Scenario & 
-	1. The plugin is installed preconfigured with a collection of common best practives for Dafny, which is done through a DSL file. \newline
+	1. The plugin is installed preconfigured with a collection of common best practices for Dafny, which is done through a DSL file. \newline
 	2. Programmer types code into a .dfy file. \newline 
 	3. The plugin continuously checks for violations of the rules. \newline 
 	4. If a violation is detected, it is reported through the standard mechanisms of Visual Studio Code.\\ \hline
@@ -107,7 +107,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	1a. The predefined rules are not sufficient for the programmer. \newline 
 	- The programmer can updated the configuration file himself to include his own or his company's coding guidelines. \\ \hline
 	Special Requirements & None\\ \hline
-	Frequency of Occurence & Very often, after new valid syntax was written.\\ \hline
+	Frequency of Occurrence & Very often, after new valid syntax was written.\\ \hline
 	Open Issues & None \\ \hline
 	\caption{UC3}
 \end{longtable}
@@ -132,12 +132,12 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	2. Programmer types code into a .dfy file. \newline 
 	3. The plugin continuously checks for situations that could benefit form the setting of specification constraints. \newline 
 	4. If such a semantic is detected, it is reported through the standard mechanisms of Visual Studio Code, with a command offered to add the constraints. \newline
-	5. The programmer invokes the refactorings and the necessary code is added.\\ \hline
+	5. The programmer invokes the refactoring and the necessary code is added.\\ \hline
 	Extensions & 
 	1a. The predefined situations and contract code additions are not sufficient for the programmer. \newline 
 	- The programmer can updated the configuration file himself to include support for his own or his company's  common code semantics. \\ \hline
 	Special Requirements & None\\ \hline
-	Frequency of Occurence & Very often, upon typing code with no syntax errors.\\ \hline
+	Frequency of Occurrence & Very often, upon typing code with no syntax errors.\\ \hline
 	Open Issues & None \\ \hline
 	\caption{UC4}
 \end{longtable}
@@ -164,7 +164,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	Extensions & 
 	None. \\ \hline
 	Special Requirements & None\\ \hline
-	Frequency of Occurence & Very often, after every key up event.\\ \hline
+	Frequency of Occurrence & Very often, after every key up event.\\ \hline
 	Open Issues & None \\ \hline
 	\caption{UC5}
 \end{longtable}

@@ -4,22 +4,22 @@
 Visual Studio Code plugins can be tested with standard javascript testing frameworks like Mocha or Jasmine, if they don't use any features of Visual Studio Code itself. This allows to test core logic without the need to run tests inside VS Code.
 
 \subsubsection{Integration Tests}
-VS Code extensions which require VS Code API can be tested with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like creating a new file, entering a character, using auto-completion and verifing if the extension works as expected.   
+VS Code extensions which require VS Code API can be tested with help of a special instance of VS Code. Inside this instance, the extension can use the full API and tests can execute commands like creating a new file, entering a character, using auto-completion and verifying if the extension works as expected.   
 
 \subsubsection{Test overview}
-To verify that the Dafny VSCode Plugin is working as expected, it has to be properly tested. Therefore exists two possibilities. Either automatic unit / integration tests or manual testing. The best would be to test everything automatically. Unfortunately this is not possible, though the VSCode Test API provides a rich set of methods, but no direct access to the filesystem or to wait for certain tasks to finish. For this reason some tests have to be performed manually, especially use cases which installs Dafny and rely heavily on scripts. On the other side if all automatic tests fail, it's mostly a clear signal that something with the server is not okay. So the automatically tests also verifies if the DafnyServer is working correctly. During development it is also quite easy to verify certain features on the fly. 
+To verify that the Dafny VSCode Plugin is working as expected, it has to be properly tested. Therefore exists two possibilities. Either automatic unit / integration tests or manual testing. The best would be to test everything automatically. Unfortunately this is not possible, though the VSCode Test API provides a rich set of methods, but no direct access to the file system or to wait for certain tasks to finish. For this reason some tests have to be performed manually, especially use cases which installs Dafny and rely heavily on scripts. On the other side if all automatic tests fail, it's mostly a clear signal that something with the server is not okay. So the automatically tests also verifies if the DafnyServer is working correctly. During development it is also quite easy to verify certain features on the fly. 
 Below you first find what is tested and how, followed by table which explains how the individual use cases are tested and guides for manual testing. 
 
 \subsubsection{System Tests}
 As discussed in the last chapter, that not everything can be easily tested, the test scope has to be restricted. The following table shows which system component are tested and how.
 \begin{longtable}{ p{0.3\textwidth} | p{0.2\textwidth} | p{0.4\textwidth} }
 \textbf{Topic} & \textbf{Tested} & \textbf{Description}\\
-	Installation of Dafny Plugin & Manual & Manual installation of Dafny and setting of basepath   \\
+	Installation of Dafny Plugin & Manual & Manual installation of Dafny and setting of base path   \\
 	Automatic installation of Dafny & Manual & Easier to validate that basepath is set correctly and all files exists \\
-	Uninstallation of Dafny & Manual & Verify on filesystem level\\
+	Uninstallation of Dafny & Manual & Verify on file system level\\
 	Communication DafnyServer and Dafny Plugin & Manual + Automatic & Test if output from DafnyServer is correctly parsed and displayed\\
 	Restart DafnyServer task & Manual & Check if a new PID is used and the other is stopped\\
-	Local queue & Manual & DafnyServer can be paused in Visual Studio and queueing can be checked \\
+	Local queue & Manual & DafnyServer can be paused in Visual Studio and queuing can be checked \\
 	Syntax highlighting & Manual & Look on our examples \\
 	Verification on typing & Manual & Easy to test manually\\
 	Snippets & Manual & Check if snippets are working\\
@@ -28,7 +28,7 @@ As discussed in the last chapter, that not everything can be easily tested, the 
 	Definition Provider & Automatic & Can be tested with the VSCode API easily  \\
 	Code Lens & Automatic & Can be tested with the VSCode API easily \\
 	Automatic generation of contracts & Manual & \todo{add desc} \\
-	Autocompletion for identifiers & Automatic & \todo{add desc} \\
+	Auto completion for identifiers & Automatic & \todo{add desc} \\
 	Reporting of Dafny best practices violations & Manual & \todo{add desc} \\
 \end{longtable}
 All automatic tests also check if the DafnyServer and DafnyDef are communicating correctly with each other.
@@ -87,7 +87,7 @@ The server should be restarting automatically, with corresponding messages insid
 \begin{enumerate}
 	\item Open the file simpleTest.dfy
 	\item The server should be started and the file verified
-	\item Open VisualStudio and attach the debugger to the DafnyServer process
+	\item Open Visual Studio and attach the debugger to the DafnyServer process
 	\item Set a breakpoint in the verify method
 	\item Change a assert in the simpleTest.dfy 
 	\item VisualStudio should break at the breakpoint
