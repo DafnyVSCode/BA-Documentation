@@ -41,8 +41,8 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 \subsection{DafnyServer}
 Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-microsoft}{https://github.com/FunctionalCorrectness/dafny-microsoft}
 
-The DafnyServer is a simple console application which allows proofing Dafny source files. To verify files, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in json format \todo{add reference to source.cs} and is sent base64 encoded. By default the server only supports the verbs verify, quit and selftest. Verbs are sent first followed by a newline \textbackslash{n}. May proceed by a payload and an end string \todo{reference to end string}. 
-Verb explanation: Verify needs a verification task and returns if all proofs holds, quit stops the server and selftest execute some simple verification. 
+The DafnyServer is a simple console application which allows proofing Dafny source files. To verify documents, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in json format \todo{add reference to source.cs} and is sent base64 encoded. By default the server only supports the verbs verify, quit and selftest. Verbs are sent first followed by a newline \textbackslash{n}. May proceed by a payload and an end string \textbf{[[DAFNY-CLIENT: EOM]]}. \newline 
+Verb explanation: Verify needs a verification task and returns if all proofs holds, quit stops the server and selftest execute some simple verification. \newline
 
 \textbf{Example verification task}
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -56,105 +56,142 @@ Verb explanation: Verify needs a verification task and returns if all proofs hol
 \end{lstlisting}
 
 \subsubsection{symbols}
-To support refactorings in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their position information needed to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This returns a json formatted symbol table, of the input file. 
+To support refactorings in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their information about position, reference and usage have to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This collects various information about the SymbolTable of the input file and returns it as json. 
 \newline\newline
 \textbf{Request: }
-\todonl{add request}
-\newline\newline
+
+\begin{lstlisting}[language=dafny]
+class BankAccountUnsafe {
+  var balance: int;
+  constructor() modifies this { 
+    balance := 10;
+  }
+  
+  method withdraw(amount: int) 
+    modifies this
+    requires amount >= 0
+  {   
+    balance := balance - amount; 
+  } 
+}   
+
+method test() { 
+  var a := new BankAccountUnsafe(); 
+  a.withdraw(9);  
+}   
+\end{lstlisting}
+
 \textbf{Result: }
 \begin{lstlisting}[language=json,firstnumber=1]
-{[
+[ 
+....
 {
-	"Module" : "_module",
-	"Name" : "Fibonacci",
-	"ParentClass" : "_default",
-	"SymbolType" : "Function",
-	"Position" : 190,
-	"Line" : 17,
-	"Column" : 12
+  "Call" : null,
+  "Column" : 3,
+  "EndColumn" : null,
+  "EndLine" : null,
+  "EndPosition" : null,
+  "Ensures" : [],
+  "Line" : 3,
+  "Module" : "_module",
+  "Name" : "_ctor",
+  "ParentClass" : "BankAccountUnsafe",
+  "Position" : 49,
+  "References" : [{
+    "Column" : 12,
+    "Line" : 15,
+    "MethodName" : "test",
+    "Position" : 265,
+    "ReferencedName" : "_ctor"
+  }],
+  "Requires" : [],
+  "SymbolType" : "Method"
 }, {
-	"Module" : "_module",
-	"Name" : "Test",
-	"ParentClass" : null,
-	"SymbolType" : "Class",
-	"Position" : 8,
-	"Line" : 2,
-	"Column" : 7
+  "Call" : null,
+  "Column" : 9,
+  "EndColumn" : null,
+  "EndLine" : null,
+  "EndPosition" : null,
+  "Ensures" : [],
+  "Line" : 6,
+  "Module" : "_module",
+  "Name" : "withdraw",
+  "ParentClass" : "BankAccountUnsafe",
+  "Position" : 114,
+  "References" : [{
+    "Column" : 5,
+    "Line" : 16,
+    "MethodName" : "test",
+    "Position" : 296,
+    "ReferencedName" : "withdraw"
+  }],
+  "Requires" : ["amount >= 0"],
+  "SymbolType" : "Method"
 }, {
-	"Module" : "_module",
-	"Name" : "_default",
-	"ParentClass" : null,
-	"SymbolType" : "Class",
-	"Position" : 0,
-	"Line" : 0,
-	"Column" : 0
+  "Call" : null,
+  "Column" : 6,
+  "EndColumn" : null,
+  "EndLine" : null,
+  "EndPosition" : null,
+  "Ensures" : null,
+  "Line" : 2,
+  "Module" : "_module",
+  "Name" : "balance",
+  "ParentClass" : "BankAccountUnsafe",
+  "Position" : 32,
+  "References" : [{
+    "Column" : 5,
+    "Line" : 4,
+    "MethodName" : "balance",
+    "Position" : 85,
+    "ReferencedName" : "balance"
+  }, {
+    "Column" : 3,
+    "Line" : 10,
+    "MethodName" : "balance",
+    "Position" : 190,
+    "ReferencedName" : "balance"
+  }, {
+    "Column" : 14,
+    "Line" : 10,
+    "MethodName" : "balance",
+    "Position" : 201,
+    "ReferencedName" : "balance"
+  }],
+  "Requires" : null,
+  "SymbolType" : "Field"
 }
-]}
-\end{lstlisting}
-
-\subsubsection{references}
-To support CodeLens in the plugin, it was also necessary to get all method references from a given one. To also allow that the verb "references" was also introduced. This task finds all call statements towards a specified method. This has to be specified in the args argument, with the following information: [moduleName, className, methodName]. 
-\newline\newline
-\textbf{Request: }
-\todonl{add request}
-\newline\newline
-\textbf{Result: }
-\begin{lstlisting}[language=json,firstnumber=1]
-[{
-	"MethodName":"Main3",
-	"Position":226,
-	"Line":18,
-	"Column":8
-}] 
-\end{lstlisting}
-
-
-\subsubsection{proofs}
-\textbf{Request: }
-\begin{lstlisting}[language=json,firstnumber=1]
-\todo{Add request}
-\end{lstlisting}
-
-\textbf{Result: }
-\begin{lstlisting}[language=json,firstnumber=1]
-[
-	{
-		"Proof" : "a#0 != null",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "$w$loop#0 ==> i#0 <= N#0",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "$w$loop#0 ==> sum#0 <= i#0 * max#0",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "a#0 != null",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "0 <= i#0 && i#0 < _System.array.Length(a#0)",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "a#0 != null",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "0 <= i#0 && i#0 < _System.array.Length(a#0)",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "a#0 != null",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "0 <= i#0 && i#0 < _System.array.Length(a#0)",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "0 <= $decr$loop#00 || N#0 - i#0 == $decr$loop#00",
-		"Type" : "Assert"
-	}, {
-		"Proof" : "N#0 - i#0 < $decr$loop#00",
-		"Type" : "Assert"
-	}
+.... 
 ]
 \end{lstlisting}
 
+
+
+\subsubsection{versioncheck}
+To support automatically updates of the Dafny environment in a general approach, it was decided to implement this features directly into the DafnyServer. To make it as general as possible the check is directly performed on release page of the dafny project. The GitHub api allows to check that in just one call. Additionally a semantic versioning library\cite{semver} was used to compare the current and the version from GitHub. Based on that check either there is a update available or the latest version is installed. If there is a update available the url to download the package can also be read out of the returned json. 
+\newline
+\textbf{Response from GitHub}
+\begin{lstlisting}[language=json,firstnumber=1]
+[{
+  "name" : "v1.9.12",
+  "assets" : [{
+    "name" : "dafny-1.9.12-x64-osx-10.11.6.zip",
+    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-osx-10.11.6.zip"
+  }, {
+    "name" : "dafny-1.9.12-x64-ubuntu-14.04.zip",
+    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-ubuntu-14.04.zip"
+  }, {
+    "name" : "dafny-1.9.12-x64-win.zip",
+    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-win.zip"
+  }]
+}]
+\end{lstlisting}
+
+Currently the check is performed against the url:  \href{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases}{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases} which have to be changed as soon as the pull request is performed. 
+
+
+\subsubsection{version}
+The command returns the version of the DafnyServer.  
 
 
 \subsection{Dafny}

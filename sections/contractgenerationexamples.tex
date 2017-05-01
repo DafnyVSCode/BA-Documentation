@@ -9,8 +9,7 @@ A method access an array with an index, which is given as a parameter. The array
 Generate a precondition which checks if the array is not null and the index is in bound of the array.
 
 \paragraph{Code:}
-\lstset{style=dafny}
-\begin{lstlisting}
+\begin{lstlisting}[language=dafny]
 method FindUsafe(a: array<int>, key: int) return (element: int)
 {
 	return a[key];
@@ -32,8 +31,7 @@ A method that processes withdraws form a bank account may not make a bank balanc
 Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 
 \paragraph{Code:}
-\lstset{style=dafny}
-\begin{lstlisting}
+\begin{lstlisting}[language=dafny]
 class BankAccountUnsafe {
 	var balance: int;
 	
@@ -62,8 +60,7 @@ A factory wants to model its processes. Their services consist of refining certa
 Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 
 \paragraph{Code:}
-\lstset{style=dafny}
-\begin{lstlisting}
+\begin{lstlisting}[language=dafny]
 
 class RawMaterial {
 	var abreasesMachines: bool;
