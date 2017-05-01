@@ -1,5 +1,17 @@
 \subsection{Features} \label{features}
-This chapter details the different features that were implemented during the project. They are mostly language agnostic features that were implemented according to the language server protocol to offer a richer IDE experience. 
+This chapter details the different features that were implemented during the project. They are mostly language agnostic features that were implemented according to the language server protocol to offer a richer IDE experience. The backbone of the language server protocol is the interface IConnection. When the plugin is started, an instance of this interface is established which established the connection from the client (the IDE) to the server (the plugin / the language server). On this connection, generic requests and replies can be sent and recieved, but the language server protocol also offers defined messages for common IDE features. \newline
+For instance, if the plugin wants to support rename element, it must provide a callback to the onRenameRequest on the connection. The input to this callback usually are the information needed to answer the request, typically a document and a position in it. The language server is then free in its implementation on how to answer these requests. \newline
+Usually this is done by a so called provider, a class which implements at least one method that can answer such a request. This method is then registered as a callback to that element when the plugin is initialized.\newline
+This project also chose this approach, for every IDE feature a provider was implemented, which carries out the task of answering such a request. The providers themselves releay heavily on the symbol service. Both the providers and the symbol service are explained below. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{img/featureArchitecture}
+	\caption{How the IDE-features are integrated into the language server}
+	\label{fig:featurearchitecture}
+\end{figure}
+
 
 \subsubsection{Codelenses} \label{codelenses}
 Codelenses are visual studio code features which is also common to many other IDEs. The idea is to display metainformation about certain pieces of codes, for instance classes and methods. In visual studio code this is done  by adding an additional line of text to the editor whereever a code lense should  be placed. \newline
@@ -14,7 +26,9 @@ Since this can be used to quickly gain a deeper understanding of a codebase, it 
 \end{figure}
 
 The first decision to be made was for which elements in the code codelenses should be displayed. The adeoff here is to  provide enough information to work comfortably with the codebase and not to clutter the workspace with codelenses. It was decided to display codelenses for classes, methods (including constructors) and fields, since they tend to have a wide scope in the codebases. \newline
+
 A second consideration was which information should be displayed in the codelens. When codelenses are language specific and do not for instance stem from a plugin which displays code metrics are similar, usually references and usages of the element are displayed. Since this allows the programmer to gain a deeper understanding of control flow and regions affected by refactorings, it was decided to display this information also for the Dafny plugin. Codelenses also allow commands to be executed when clicked upon, a logical conclusion is to implement go to reference when a reference in a codelens is clicked.\newline
+Since the tasks of finding the elements which need a codelens and constructing the codelens itself are very different, the implementations were seperated in a baseclass and a childclass. The baseclass answers the onCodeLens request of the connection and the childclass then answers the onCodeLensResolve request. The reasoning for this lies in future expansion, as maybe additional information should be displayed in a codelens. This can be done in an own childclass, the produced codelenses (which stem from the same placeholder codelens) then are automatically merged by Visual Studio Code. This design was also inspired by the GoLang Plugin. 
 
 \begin{figure}[H]
 	\centering
