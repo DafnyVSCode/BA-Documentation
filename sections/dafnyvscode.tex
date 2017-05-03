@@ -4,16 +4,16 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 \subsection{Overview}
 \todo{Maybe add a class diagram}
 
-\subsection{VSCode Plugin}
+\subsection{Visual Studio Code Plugin}
 \subsubsection{Structure}
-\todo{How is a vscode plugin structured, package.json explanation}
+\todo{How is a Visual Studio Code plugin structured, package.json explanation}
 
 
 \input{sections/languageserver}
 
 \subsection{Extension points}
 
-\paragraph{Statusbar}
+\paragraph{Status bar}
 
 \paragraph{Refactoring}
 
@@ -26,7 +26,7 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 
 \subsection{Communication}
 
-\subsection{Sytax highlighting}
+\subsection{Syntax highlighting}
 
 \subsection{Snippets}
 
@@ -41,7 +41,7 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 \subsection{DafnyServer}
 Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-microsoft}{https://github.com/FunctionalCorrectness/dafny-microsoft}
 
-The DafnyServer is a simple console application which allows proofing Dafny source files. To verify documents, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in json format \todo{add reference to source.cs} and is sent base64 encoded. By default the server only supports the verbs verify, quit and selftest. Verbs are sent first followed by a newline \textbackslash{n}. May proceed by a payload and an end string \textbf{[[DAFNY-CLIENT: EOM]]}. \newline 
+The DafnyServer is a simple console application which allows proofing Dafny source files. To verify documents, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in JSON format \todo{add reference to source.cs} and is sent base64 encoded. By default, the server only supports the verbs verify, quit and selftest. Verbs are sent first, followed by a newline \textbackslash{n}. They may be proceeded by a payload and an end string \textbf{[[DAFNY-CLIENT: EOM]]}. \newline 
 Verb explanation: Verify needs a verification task and returns if all proofs holds, quit stops the server and selftest execute some simple verification. \newline
 
 \textbf{Example verification task}
@@ -56,7 +56,7 @@ Verb explanation: Verify needs a verification task and returns if all proofs hol
 \end{lstlisting}
 
 \subsubsection{symbols}
-To support refactoring in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their information about position, reference and usage have to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This collects various information about the SymbolTable of the input file and returns it as json. 
+To support refactoring in the Dafny Visual Studio Code plugin, symbol information was needed. All fields, methods and classes inside a file along with their information about position, reference and usage have to be accessible. To support this, the DafnyServer was extended. A new verb "symbols" was introduced. This collects various information about the symbol table of the input file and returns it as JSON. 
 \newline\newline
 \textbf{Request: }
 
@@ -168,7 +168,7 @@ method test() {
 
 
 \subsubsection{versioncheck}
-To support automatically updates of the Dafny environment in a general approach, it was decided to implement this features directly into the DafnyServer. To make it as general as possible the check is directly performed on release page of the dafny project. The GitHub api allows to check that in just one call. Additionally a semantic versioning library\cite{semver} was used to compare the current and the version from GitHub. Based on that check either there is a update available or the latest version is installed. If there is a update available the url to download the package can also be read out of the returned json. 
+To support automatic updates of the Dafny environment in a general approach, it was decided to implement this features directly into the DafnyServer. To make it as general as possible, the check is directly performed on release page of the Dafny project. The GitHub API allows to check this in just one call. Additionally, a semantic versioning library\cite{semver} was used to compare the current and the version from GitHub. Based on that, it either checks if an update is available or if the latest version is installed. If there is an update available, the URL to download the package can also be read out of the returned JSON 
 \newline
 \textbf{Response from GitHub}
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -187,7 +187,7 @@ To support automatically updates of the Dafny environment in a general approach,
 }]
 \end{lstlisting}
 
-Currently the check is performed against the url:  \href{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases}{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases} which have to be changed as soon as the pull request is performed. 
+Currently the check is performed against the URL:  \href{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases}{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases} which has to be changed as soon as the pull request is performed. 
 
 
 \subsubsection{version}
@@ -220,7 +220,7 @@ Dafny would support the following Unicode characters:
 	
 \end{longtable}
 
-Unfortunately they are not working right know, because of a bug in the parser.
+Unfortunately they are not working right know because of a bug in the parser.
 
 
 \subsection{Eclipse integration}
@@ -228,10 +228,10 @@ The eclipse project \href{https://projects.eclipse.org/projects/technology.lsp4e
 \newline
 "It includes some APIs to turn language server protocol elements into Eclipse IDE concepts and a generic integration allowing to easily plug any language server to an Eclipse IDE instance without need to write Java code, either via a plugin associating a new language server, and by letting users manually bind language servers to their IDE." \cite{lsp4e}
 
-It is built on top of \href{https://github.com/eclipse/lsp4j}{LSP4J} a java implementation of the language server protocol. 
+It is built on top of \href{https://github.com/eclipse/lsp4j}{LSP4J}, a Java implementation of the language server protocol. 
 \newline
-Integrating the VSCode Dafny language server into eclipse could became possible in the future. Right know there is no way to interact on the client side as well. You only can specify a language server based on a program (NodeJS) and arguments (extension.js) which is executed and used for querying information. You can't add any behavior to Eclipse itself, which would be necessary for certain features. Also the sendRequest isn't implemented yet (Commit: 1615e07), which is important for starting the DafnyServer correctly. 
-The better way would be to program a new eclipse plugin, based on LSP4J which then would also allow to customize the statusbar, run scripts and show progress information. 
+Integrating the Visual Studio Code Dafny language server into Eclipse could become possible in the future. Right know there is no way to interact on the client side as well. One only can specify a language server based on a program (NodeJS) and arguments (extension.js) which is executed and used for querying information. One can't add any behavior to Eclipse itself, which would be necessary for certain features. Also, the sendRequest isn't implemented yet (Commit: 1615e07), which is important for starting the DafnyServer correctly. 
+The better way would be to program a new Eclipse plugin, based on LSP4J, which then would also allow to customize the status bar, run scripts and show progress information. 
 
 
 

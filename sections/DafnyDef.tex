@@ -1,23 +1,23 @@
-\subsection{Dafny VSCode}
-Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{https://github.com/FunctionalCorrectness/dafny-vscode}
+\subsection{Dafny Visual Studio Code}
+GitHub Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{https://github.com/FunctionalCorrectness/dafny-vscode}
 
 \subsubsection{Overview}
 \todo{Maybe add a class diagram}
 
 \subsubsection{VSCode Plugin}
 \paragraph{Structure}
-\todo{How is a vscode plugin structured, package.json explaination}
+\todo{How is a Visual Studio Code plugin structured, package.json explanation}
 
 \subsubsection{Extension points}
 
-\paragraph{Statusbar}
+\paragraph{Status bar}
 \paragraph{Refactoring}
 \paragraph{CodeLens}
 
 
 \subsubsection{Communication}
 
-\subsubsection{Sytax highlighting}
+\subsubsection{Syntax highlighting}
 
 \subsubsection{Snippets}
 
@@ -32,7 +32,7 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 \subsection{DafnyServer}
 Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-microsoft}{https://github.com/FunctionalCorrectness/dafny-microsoft}
 
-The DafnyServer is a simple console application which allows proofing Dafny source files. To verify files, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in json format \todo{add reference to source.cs} and is sent base64 encoded. By default the server only supports the verbs verify, quit and selftest. Verbs are sent first followed by a newline \textbackslash{n}. May proceed by a payload and an end string \todo{reference to end string}. 
+The DafnyServer is a simple console application which allows proofing Dafny source files. To verify files, they are sent over the standard input. Results are obtained from the standard output. The verification task needs to be in JSON format \todo{add reference to source.cs} and is sent base64 encoded. By default, the server only supports the verbs verify, quit and selftest. Verbs are sent first, followed by a newline \textbackslash{n}. They then may be proceeded by a payload and an end string \todo{reference to end string}. 
 Verb explanation: Verify needs a verification task and returns if all proofs holds, quit stops the server and selftest execute some simple verification. 
 
 \textbf{Example verification task}
@@ -47,7 +47,7 @@ Verb explanation: Verify needs a verification task and returns if all proofs hol
 \end{lstlisting}
 
 \subsubsection{symbols}
-To support refactorings in the Dafny VSCode plugin, symbol information were needed. All fields, methods and classes inside a file with their position information needed to be accessible. To support that the DafnyServer was extended. A new verb "symbols" was introduced. This returns a json formatted symbol table, of the input file. 
+To support refactorings in the Dafny Visual Studio Code plugin, symbol information was needed. All fields, methods and classes inside a file with their position information needed to be accessible. To support this, the DafnyServer was extended. A new verb "symbols" was introduced. This returns a JSON formatted symbol table of the input file. 
 \newline\newline
 \textbf{Request: }
 \todonl{add request}
@@ -84,7 +84,7 @@ To support refactorings in the Dafny VSCode plugin, symbol information were need
 \end{lstlisting}
 
 \subsubsection{references}
-To support CodeLens in the plugin, it was also necessary to get all method references from a given one. To also allow that the verb "references" was also introduced. This task finds all call statements towards a specified method. This has to be specified in the args argument, with the following information: [moduleName, className, methodName]. 
+To support CodeLens in the plugin, it was also necessary to get all method references from a given one. To also allow this, that the verb "references" was also introduced. This task finds all call statements towards a specified method. This has to be specified in the args argument, with the following information: [moduleName, className, methodName]. 
 \newline\newline
 \textbf{Request: }
 \todonl{add request}

@@ -1,32 +1,32 @@
 \subsection{Language Server}
 
-VS-Code Plugins can be implemented in two ways: the first one is via the standard VS-CODE API and the second one is in form of a language server. Language servers follow a standard protocol to provide services for working with different programming languages and offer often used features such as go to definition. While this offers great portability and easy integration with other IDEs or tools that work with language server, the implementation as a language server was rejected in this project. \newline
-The main reason is that the project extends an existing plugin, which was already built around the standard VS-CODE API. After a phase of research and writing a small prototype it was decided that rewriting the plugin as a language server was not a feasible in regard to the work needed to be done compared to the project scope. \newline
-A second consideration when making this decision was that the usage of language servers in VS-CODE plugins is very sparse at the moment. The big language integrations like typescript or javascript do not implement their plugins as language servers, while the golang plugin offers experimental support at this time. The not wide spread usage in this environment was therefore another reason to not implement a language server.
+Visual Studio Code plugins can be implemented in two ways: the first one is via the standard Visual Studio Code API and the second one is in form of a language server. Language servers follow a standard protocol to provide services for working with different programming languages and offer often used features such as go to definition. While this offers great portability and easy integration with other IDEs or tools that work with language servers, the implementation as a language server was rejected in this project. \newline
+The main reason is that the project extends an existing plugin, which was already built around the standard Visual Studio Code API. After a phase of research and writing a small prototype it was decided that rewriting the plugin as a language server was not feasible in regard to the work needed to be done compared to the project scope. \newline
+A second consideration when making this decision was that the usage of language servers in Visual Studio Code plugins is very sparse at the moment. The big language integrations like typescript or javascript do not implement their plugins as language servers, while the GoLang plugin offers experimental support at this time. The not wide spread usage in this environment was therefore another reason to not implement a language server.
 
 
-Server here refers to the Language Server and not the DafnyServer. The later one is explicitly written as DafnyServer.
+Server here refers to the language server and not the DafnyServer. The later one is explicitly written as DafnyServer.
 
 \subsubsection{Communication Types}
 There are two different types to communicate between the client and the server. It's either a notification or a request. 
 
 \paragraph{Notification}
-A notification is just a message which can be sent in both directions. But you can't wait for an answer. These types of messages are mostly used to inform the partner that something happened. 
+A notification is just a message which can be sent in both directions. But one can't wait for an answer. These types of messages are mostly used to inform the partner that something happened. 
 
 \paragraph{Request}
-A request on the other side is message, which will be answered.  
+A request on the other side is a message which will be answered.  
 
 \subsubsection{Commands}
-Commands are specified in the client and can trigger different actions. You can specify names for them and register shortcuts from them. Also the server can send commands. 
+Commands are specified in the client and can trigger different actions. One can specify names for them and register shortcuts from them. Also the server can send commands. 
 
 \subsubsection{Communication overview}
-To get an overview over how the client and the server communicates, all the different notifications, requests and commands are explained. 
+To get an overview over how the client and the server communicate, all the different notifications, requests and commands are explained. 
 
 
 \subsubsection{Notification Server $\longrightarrow$ Client}
 
 \textbf{ERROR}
-This message is sent if something happens, which the user should be informed about. Like the compilation failed or the DafnyServer wasn't found. \newline
+This message is sent if something happens which the user should be informed about. Examples would be that the compilation failed or the DafnyServer wasn't found. \newline
 
 \textbf{WARNING}
 This message is sent if the mono path is specified but mono is in the path. \newline
@@ -35,19 +35,19 @@ This message is sent if the mono path is specified but mono is in the path. \new
 Info messages appear quite often to inform the user about the current progress. \newline
 
 \textbf{queueSize}
-This message updates the queue size number in the statusbar on the right side. \newline
+This message updates the queue size number in the status bar on the right side. \newline
 
 \textbf{serverStarted}
-This message contains two additional parameters, which are also important for the statusbar. Is the pid and the version of the started DafnyServer instance. It is sent after the dependencies have been checked and the DafnyServer have been spawn. \newline
+This message contains two additional parameters, which are also important for the status bar. They are the PID and the version of the started DafnyServer instance. It is sent after the dependencies have been checked and the DafnyServer have been spawned. \newline
 
 \textbf{activeVerifiyingDocument}
-As soon a verification is sent to the DafnyServer, the client is informed to show that, if the user has this file open. \newline
+As soon as a verification is sent to the DafnyServer, the client is informed to show that, if the user has this file open. \newline
 
 \textbf{verificationResult}
 All verification results are sent to the server, for fast access times. Switching from one file to the other, updates the verification result on the left side based on these results. \newline
 
 \textbf{changeServerStatus}
-All states from the server are also sent to the client to update the statusbar. \newline
+All states from the server are also sent to the client to update the status bar. \newline
 
 \textbf{ready}
 This message is sent directly after the serverStarted message to inform the DafnyClientProvider that verification requests can now be sent. \newline
@@ -60,7 +60,7 @@ This informs the client that the verification of the DafnyServer has failed or t
 \subsubsection{Diagnostics Server $\longrightarrow$ Client}
 
 \textbf{sendDiagnostics}
-After a file has been verified the output is analyzed and errors are sent as diagnostics to the client. They contains also the message or even related locations, where the errors is coming from.  \newline
+After a file has been verified, the output is analyzed and errors are sent as diagnostics to the client. They contain also the message or even related locations, where the errors is coming from.  \newline
 
 \subsubsection{Notification Client $\longrightarrow$ Server}
 
@@ -70,13 +70,13 @@ This notification contains the document which has to be verified. On the server 
 \subsubsection{Request Client $\longrightarrow$ Server}
 
 \textbf{reset}
-Resets the DafnyServer on the Server and restart it. Can be useful if the caching of the DafnyServer is not working correctly anymore. \newline
+Resets the DafnyServer on the Server and restarts it. This can be useful if the caching of the DafnyServer is not working correctly anymore. \newline
 
 \textbf{compile}
-Sends a request containing only the uri to the corresponding file. Starts the Dafny.exe with parameters to generate either a dll or a exe. After the compilation it returns possible errors, if it is executable and a message.\newline
+Sends a request containing only the Uri to the corresponding file. Starts the Dafny.exe with parameters to generate either a dll or an exe. After the compilation, it returns possible errors, if it is executable and a message.\newline
 
 \textbf{stop}
-Stops the server and returns after the process has been terminated. This is used for the installation to be sure that the process is not run. \newline
+Stops the server and returns after the process has been terminated. This is used for the installation to be sure that the process is not being run. \newline
 
 \subsubsection{Commands Client}
 
@@ -94,7 +94,7 @@ First stops any DafnyServer instance and deletes all files which belongs to Dafn
 This is used to show references from CodeLenses. Unfortunately the command editor.action.showReferences can not be used directly, because of some internal problems. To solve that, all parameters have to be copied and passed to this command. \newline
 
 \textbf{dafny.editText}
-Mainly used for all refactoring to chance text in the active text document. \newline
+Mainly used for all refactoring to change text in the active text document. \newline
 
 \textbf{dafny.compile}
 \todo{add mac shortcut correctly}
@@ -105,7 +105,7 @@ Compile the current document \newline
 \textbf{dafny.compileAndRun}
 Shortcut: F5
 \newline
-Compile the current document and if there is a "Main Method" start the corresponding executable. \newline
+Compile the current document, and if there is a "Main Method", start the corresponding executable. \newline
 
 
 \subsubsection{Startup process}

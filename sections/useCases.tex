@@ -19,8 +19,8 @@ The system automatically does syntax highlighting while the user writes a Dafny 
 \subsubsection{UC3: Reporting of Dafny best practices violations}
 The plugin can be configured with a simple DSL config file which describes common best practices for Dafny. The plugin reports violations of these rules via the standard Visual Studio Code notification mechanisms.
 \subsubsection{UC4: Automatic generation of contracts}
-The plugin can be configured with a simple DSL-File to recognize certain situations, which could benefit from the setting of Pre- and Postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.
-\todonl{Maybe remove dsl from description and add annotation }
+The plugin can be configured with a simple DSL-File to recognize certain situations, which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.
+\todonl{Maybe remove DSL from description and add annotation }
 \subsubsection{UC5: Autocompletion for identifiers}
 The plugin offers autocompletion of Dafny code while the user types via the standard Visual Studio Code mechanisms.
 \subsection{Descriptions (fully dressed)}
@@ -30,7 +30,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 \begin{longtable}{l | p{0.7\textwidth} }
 	Description & A programmer can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.\\ \hline
 	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer wants install the Dafny plugin to visual studio code.\\ \hline
+	Trigger & Programmer wants to install the Dafny plugin to Visual Studio Code.\\ \hline
 	Stakeholder and Interests & Programmer: Wants an easy, automated installation of the plugin. \newline Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.\\ \hline
 	Preconditions &\begin{itemize}
 		\item Depending on the environment, either the .NET or the mono framework are installed.
@@ -44,8 +44,8 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	Main Success Scenario & 
 	1. Programmer downloads the plugin via the Visual Studio Code plugin store. \newline
 	2. The plugin determines which platform it is run on, and sets either the path to the .Net framework or the mono framework. \newline
-	3. The plugin downloads Dafny and sets the path to the Dafny server binary. \newline
-	4. The plugin then installs itself via the standard Visual Studion Code plugin mechanisms. \newline
+	3. The plugin downloads Dafny and sets the path to the DafnyServer binary. \newline
+	4. The plugin then installs itself via the standard Visual Studio Code plugin mechanisms. \newline
 	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\ \hline
 	Extensions & 
 	2a. The installer can't find, depending on the environment, either the mono or the .Net framework in the standard locations. \newline 
@@ -58,7 +58,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 
 \subsubsection{UC2: Syntax Highlighting}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The system automatically does syntax highlighting while the user writes a Dafny (dfy.) file.\\ \hline
+	Description & The system automatically does syntax highlighting while the user writes a Dafny (.dfy) file.\\ \hline
 	Primary Actor & Programmer\\ \hline
 	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
 	Stakeholder and Interests & Programmer: Wants enhanced readability for the source files he is working on. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ \hline
@@ -105,7 +105,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	4. If a violation is detected, it is reported through the standard mechanisms of Visual Studio Code.\\ \hline
 	Extensions & 
 	1a. The predefined rules are not sufficient for the programmer. \newline 
-	- The programmer can updated the configuration file himself to include his own or his company's coding guidelines. \\ \hline
+	- The programmer can update the configuration file himself to include his own or his company's coding guidelines. \\ \hline
 	Special Requirements & None\\ \hline
 	Frequency of Occurrence & Very often, after new valid syntax was written.\\ \hline
 	Open Issues & None \\ \hline
@@ -114,7 +114,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 
 \subsubsection{UC4: Automatic generation of contracts}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The plugin can be configured with a simple DSL-File to recognize certain situations which could benefit from the setting of Pre- and Postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
+	Description & The plugin can be configured with a simple DSL-File to recognize certain situations which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
 	Primary Actor & Programmer\\ \hline
 	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
 	Stakeholder and Interests & Programmer: Wants help to find appropriate contracts. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ \hline
@@ -135,7 +135,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	5. The programmer invokes the refactoring and the necessary code is added.\\ \hline
 	Extensions & 
 	1a. The predefined situations and contract code additions are not sufficient for the programmer. \newline 
-	- The programmer can updated the configuration file himself to include support for his own or his company's  common code semantics. \\ \hline
+	- The programmer can update the configuration file himself to include support for his own or his company's  common code semantics. \\ \hline
 	Special Requirements & None\\ \hline
 	Frequency of Occurrence & Very often, upon typing code with no syntax errors.\\ \hline
 	Open Issues & None \\ \hline
