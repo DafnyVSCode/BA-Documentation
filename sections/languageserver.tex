@@ -11,7 +11,7 @@ Below a short overview of the protocol and how it was implemented is given. Serv
 \subsubsection{The protocol}
 The Language Server protocol is used between a tool (the client) and a language smartness provider (the server) to integrate features like auto complete, goto definition, find all references and alike into the tool. \cite{langserver} \newline
 
-The language server maintains semantic information about a program implemented in a particular language. The language server is notified whenever the user opens a document in the tool. Also edits by the user are reported, so the language server is notified of the changes and can update the program's semantic information. Currently, only point to point communication is supported by the protocol. Sharing one language server between multiple tools would require further protocol mechanismsn like locking a file.\newline
+The language server maintains semantic information about a program implemented in a particular language. The language server is notified whenever the user opens a document in the tool. Also edits by the user are reported, so the language server is notified of the changes and can update the program's semantic information. Currently, only point to point communication is supported by the protocol. Sharing one language server between multiple tools would require further protocol mechanisms like locking a file.\newline
 One of the most basic features is the analysis of the document and generation of errors and warnings (called diagnostics by Microsoft), which the tool then can display. Furthermore, more sophisticated features are also provided. For instance, the client can send a definition request for a symbol to the server. The server is then tasked to answer with the URI of the file and the range in that file where the definition can be found. The tool is then free to open said file or simply provide a peek at it through an overlay. \newline
 
 \begin{figure}[H]
@@ -22,7 +22,7 @@ One of the most basic features is the analysis of the document and generation of
 \end{figure}
 
 
-The server also gets notified when the user closes a file. An important distinction to make is that whenever the client has openend a file, it recides in memory and the tool maintains it. When it is closed, it simply lies in the file system like any other file. \newline
+The server also gets notified when the user closes a file. An important distinction to make is that whenever the client has opened a file, it resides in memory and the tool maintains it. When it is closed, it simply lies in the file system like any other file. \newline
 The communication between the tool and the language server uses JSON RPC v2.0. Language server can implement an arbitrary subset of features defined in the protocol, so in the first response by the server it details what capabilities it has. \newline
 
 
@@ -117,7 +117,7 @@ export namespace ErrorCodes {
 }
 \end{lstlisting}
 \paragraph{Data structures}
-Next, an overview over the most commonly used datastructures used in the protocol is given: \newline
+Next, an overview over the most commonly used data structures used in the protocol is given: \newline
 
 \textbf{Position}
 Describes a position, e.g. of a cursor, in a document.
@@ -194,7 +194,7 @@ interface Diagnostic {
 \end{lstlisting}
 
 \textbf{Server capabilities}
-With this datastructure, the server can tell the client which features it implements. 
+With this data structure, the server can tell the client which features it implements. 
 \begin{lstlisting}[language=json,firstnumber=1]
 interface ServerCapabilities {
   /**
@@ -370,7 +370,7 @@ interface DidChangeConfigurationParams {
 
 \textbf{DidOpenTextDocument Notification}
 
-The document open notification is sent from the client to the server to signal newly opened text documents. The document's truth is now managed by the client and the server must not try to read the document's truth using the document's uri.
+The document open notification is sent from the client to the server to signal newly opened text documents. The document's truth is now managed by the client and the server must not try to read the document's truth using the document's Uri.
 
 Notification:
 \begin{lstlisting}[language=json,firstnumber=1]
@@ -409,7 +409,7 @@ interface DidChangeTextDocumentParams {
 
 \textbf{DidCloseTextDocument Notification}
 
-The document close notification is sent from the client to the server when the document got closed in the client. The document's truth now exists where the document's uri points to (e.g. if the document's uri is a file uri the truth now exists on disk).
+The document close notification is sent from the client to the server when the document got closed in the client. The document's truth now exists where the document's Uri points to (e.g. if the document's Uri is a file Uri the truth now exists on disk).
 
 Notification:
 \begin{lstlisting}[language=json,firstnumber=1]
