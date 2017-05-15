@@ -6,7 +6,25 @@ Github Repository: \href{https://github.com/FunctionalCorrectness/dafny-vscode}{
 
 \subsection{Visual Studio Code Plugin}
 \subsubsection{Structure}
-\todo{How is a Visual Studio Code plugin structured, package.json explanation}
+When a Visual Studio Code plugin is implemented as a language server, the plugin consists of two parts. The first one is an IDE-agnostic language server, which is further explained in \ref{langServer}. The second part is the actual plugin which interacts with Visual Studio Code and relies on the language server to provide functionality. \newline
+The actual plugin will further on be referenced as the client part of the plugin. The most important part of the client part is a file called package.json. It informs the IDE about the following points:
+\paragraph{Activation}
+Details for what the plugin is designed and when it is activated. Normally, plugins stay dormant until a use case is triggered for which they are needed. For this project, this is the case whenever a Dafny file is opened in Visual Studio Code.
+
+\paragraph{Commands}
+Details which commands this plugin exposes. Next to standard callbacks such as when a file is first opened or saved, additional custom commands can be registered here. This projects exposes some custom commands such as to install the Dafny server or check the version of the server currently installed. This also includes key bindings for the registered commands.
+
+\paragraph{Configuration}
+Is used to configure a plugin. For this project this for instance entails the path to the Dafny executable or if it is running on a .NET or mono environment. It also sets Visual Studio Code specific configuration, such as how long of a delay should follow typing before the file is reevaluated.
+
+\paragraph{Dependencies}
+Details all the dependencies in the form of node modules that the plugin has.
+
+\paragraph{Meta information}
+Additionally, this section details meta information about the plugin such as who developed it, which version it has and so on.
+
+
+\todo{Further explanation about the client side of the plugin}
 
 
 \input{sections/languageserver}
