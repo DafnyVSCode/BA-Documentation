@@ -32,7 +32,10 @@ Another concept that often arises when using Dafny is to make sure an expression
 These situations also occur very often, since both recursion and loops are fundamental elements of programming, it was decided that the generation of these constraints could greatly benefit the programmer. In order to do this, the plugin offers to add an increase / decrease clause with the correct expression in place when Dafny detects recursion or a loop. When the programmer chooses to use the quick fix, the guard statements are inserted at the correct place. Another important constraint when working with loops goes hand in hand with the use case described above, namely when an array is accessed within a loop and the expression used as an index is not constant within the context of the loop. For this, Dafny offers the construct of invariants, that ensure that an expression is within a certain range during a given context. The plugin therefor offers to generate invariants which ensure that an expression used as an index is always in bound of the array. When the programmer chooses to use this feature, the invariant is inserted at the correct context. 
 
 \subsubsection{Counter Examples}
-\todo{Add}
-
+A concept which was not known as the project started, were counter examples. They provide a huge benefit, as to understand how a program violates its contract. Especially if it is a more complex software with many methods and many branches, it can be very difficult to understand why a contract does not hold\newline
+For this reason it was decided to implement that features in addition to CodeActions \ref{addCodeActions}. 
+Developers can use this practical features directly in Visual Studio Code. It shows on each line how the variables have to be assigned that the proof fail. \newline
+Because the calculation of the model, how it is called in Z3, can take very long, it is not run automatically if a proof fails. Nevertheless this can be overridden over the configuration. 
+ 
 \subsubsection{Displaying Control Flow}
 \todo{Add}

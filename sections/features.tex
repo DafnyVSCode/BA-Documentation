@@ -156,3 +156,23 @@ Finally, the invariant or the preconditions must be inserted into the correct pl
 	\label{fig:indexInBound}
 \end{figure}
 At the current stand, only these three code fixes are implemented, the possible extensions are legion. One idea is to insert code that decreases a given expression when Dafny can't prove that an expression always decreases in a block were such a decrease clause was declared.\newline
+
+
+\subsubsection{Counter Examples}
+A useful features which also can provide a huge benefit, is to show an example which violates the contract, if the program can't be verified. Especially if the method is large with many branches, it can be very difficult to see how an example could look like, which is not correct regarding the contract. \newline
+Z3 verifies mathematical expression by trying to find a proof for the negation of the proof. That means if it finds a proof the program is not correct. But more important Z3 finds a assignment for the different variables which violates the contract. This knowledge can be used to show a counterexample in Visual Studio Code. The only big step is to translate the counterexample, which is called model in Z3, back into something that can be matched with the Dafny program. Fortunately this is already done in the DafnyProvider in Boogie. Additionally to get only the necessary information out of it and also to show the values of class fields the translation needed to be extended. At the end a new verb counterExample was introduced, which returns a counter example json encoded. Thereby it was possible to show assignments of the variables on each line in Visual Studio Code. \newline
+This is a easy example of a invalid method which should return the ABS, but misses to handle negative numbers correctly. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{img/counterModel}
+	\caption{CounterExample is shown in Visual Studio Code}
+	\label{fig:counterModel}
+\end{figure}
+
+Below is a more complex example of a class. The goal of the withdraw method is to prevent the balance to be below zero. Therefore the postcondition "ensures balance >= 0" exists. With help of the countermodel it becomes clear, that the amount is to big. It is bigger than zero though, but this precondition is wrong. It should be that the balance must be smaller than balance. On the first line it shows, that the balance is 2275 and the amount 2276. This results that the balance is after the subtraction negative. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{img/counterModelBank}
+	\caption{CounterExample inside a class}
+	\label{fig:counterModelBank}
+\end{figure}
