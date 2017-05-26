@@ -1,0 +1,18 @@
+\section{Outline}
+\subsection{The problem and its setting}
+This chapter presents the background of the project, the problem and its significance.
+\subsubsection{Introduction}
+Dafny is a language designed and implemented by Microsoft Research. It offers built-in specification constructs. These include pre- and postconditions, frame specifications as well as termination metrics. Further support such as ghost variables and recursive functions are also implemented. Through such specification primitives, the Dafny verifier, invoked during compilation, can be used to verify the specified aspects of the functional correctness of the program. \newline
+Dafny is typically used via its Visual Studio IDE integration under the Windows operating system. This allows for an efficient work flow of editing a program while constantly being given feedback about its functional correctness. The Dafny compiler and verifier can additionally be invoked from the command line. \newline
+Microsoft would like to integrate of Dafny into the cross-platform Visual Studio Code IDE. Work on this has already been started through a plugin by Jonathan  Rionatan. It currently works within the mono-environment and provides feedback from the verifier. \newline
+
+\subsubsection{Statement of the problem}
+This thesis aims to research on how Dafny programmers can be best supported during their work and incorporate these findings in a production quality plugin for Visual Studio Code. 
+\subsubsection{Significance of study}
+Standard programming techniques are beginning to show their limitations as multi-core and multi-threaded applications are becoming more and more popular, which are difficult and error prone.
+Proving functional correctness has the potential of helping the programmer construct reliable programs.
+Sadly, the use of this technology is not yet widespread. Providing better tool support has the potential of improving this situation. Here lies the significance of this project.
+\subsubsection{Scope and delimitation}
+The plugin is limited to be used in three defined environments, although they compromise a huge percentage of environments used in programming. The plugin offers a fixed set of features which are detailed in this thesis, but remains open for adaption and extension.
+\subsubsection{Definition of terms}
+% TODO: Write definition of terms.

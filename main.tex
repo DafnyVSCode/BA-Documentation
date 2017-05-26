@@ -109,10 +109,6 @@
 % TODO
 %\includepdf{titlepage/titlepage}
 
-% TODO
-%\input{presections/abstract}
-%\newpage
-%\input{presections/managementsummary}
 
 % TODO
 %\includepdf[pages={1-}, 
@@ -124,19 +120,29 @@
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-\input{section/abstract}
-\input{section/managementSummary}
-\input{sections/problemSetting}
-\input{sections/useCases}
+
+\input{sections/abstract}
+\input{sections/managementSummary}
+\input{sections/outline}
+\input{sections/maingoal}
+\input{sections/theoreticalBackground}
+\input{sections/stepsTowardsMainGoal}
+\input{sections/pointsForExtension}
+\input{sections/conclusion}
+
+\newpage
+\appendix
+\pagenumbering{Roman}
 \input{sections/projectmanagement}
-\input{sections/systemsetup}
-\input{sections/conception}
-\input{sections/dafnyvscode}
+\input{sections/useCases}
+\input{sections/deviations}
 \input{sections/architecture}
-\input{sections/projectCourse}
-\input{sections/furtherWork}
-%\input{sections/results}
-%\input{sections/ausblick}
+\input{sections/systemsetup}
+
+
+
+\input{sections/dafnyvscode}
+
 
 \appendix
 

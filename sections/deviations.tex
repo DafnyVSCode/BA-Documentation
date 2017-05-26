@@ -1,6 +1,6 @@
-\subsection{Deviations from the project plan}
-
-\subsubsection{UC3: Reporting of Dafny best practices violations}
+\section{Deviations from the project plan}\label{projectCourse}
+This chapter details how the project was implemented and in what way it deviated of the project plan.
+\subsection{UC3: Reporting of Dafny best practices violations}
 While this idea seemed obvious when planning the project, this feature could sadly not be implemented. When working with different IDEs and well established programming languages, a programmer is often used to be supported by tools which can help write cleaner and more idiomatic code, such as linters. From this viewpoint, the integration of such a tool into the plugin seemed necessary. \newline
 While established languages have a pool of agreed upon best practices, Dafny is still a very young language with not yet wide spread usage. The tooling around Dafny is also still not as sophisticated yet as for other languages. From this it can be inferred that there is not yet a big collection of programs to gain experience from, and that the problem of establishing a clear work flow with Dafny usually still exists, further preventing programmers to concentrate on idioms. \newline
 These facts reflect why there is no collection of best practices for Dafny yet, either in form of some documentation or as a suggestion from people that are involved with Dafny. \newline
@@ -9,7 +9,7 @@ While providing support for best practices for contracts would therefor be very 
 Since the establishment of own best practices for Dafny without being able to include an existing collection was deemed an unrealistic, and the structuring of contracts in the best way possible an unsolvable task, it was decided to concentrate on other features of the plugin instead. \newline
 
 
-\subsubsection{UC4: Automatic generation of contracts}\label{missinguc4}
+\subsection{UC4: Automatic generation of contracts}\label{missinguc4}
 Since the biggest selling point of Dafny is the possibility to write specification constructs. It therefor was clear to try to provide automatic generation of some of such constructs in this project. While planning the project, the proof pipeline used by Dafny was not yet understood fully, the grasp on proof theory was quite small as well. This made it very hard to estimate if such a feature could be implemented at all and if so, in what time. Nevertheless the potential benefit of such a feature marked it as a milestone in this project. \newline
 While researching the theoretical basis for implementing such a feature as detailed in \ref{examples} and the chapters following it, it became apparent that the topic was quite complex. A first stumbling block were invariants. As languages such as Eiffel \ref{eiffel} make it is to work with invariants, it was assumed that Dafny offers this possibility as well. \newline
 As was learned, there are several different methodologies when it comes to invariants, having them implemented as a macro which simply inserts them as postconditions to every block is simply the easiest approach. A collection of techniques can be found in \cite{invariants}. 
@@ -18,7 +18,7 @@ The second idea was to apply the concept of the weakest precondition. This means
 Lastly, it took a lot of time to gain a working knowledge of the proof pipeline. Since it consists of three big projects, namely Dafny, Boogie \cite{boogie} and Z3 working together, a deep understanding was not possible without having some existing knowledge in this time. While trying to understand the pipeline, it also became apparent that the knowledge of the authors in proof theory was not deep enough to really grasp the problem and work on a solution in a feasible time. \newline
 Because of all these reasons, it was decided to not implement this use case in this project. While this is regrettable, other ideas were gained during the investigation of the problem. The feasibility of displaying counter modules was discovered, as well as small refactorings that provide constraints for a small, but very often needed set of instructions such as array accesses were thought of. The remaining time of this milestone therefor was directed at implementing these features instead. 
 
-\subsubsection{Code Actions}\label{addCodeActions}
+\subsection{Code Actions}\label{addCodeActions}
 As detailed in \ref{missinguc4}, while trying to implement a proof of concept for contract generation, some often used concepts while working with contracts were discovered. This led to the idea to offer refactorings to generate the correct contracts for these concepts. While this is in no way a generic approach towards contract generation, it seemed as though these refactorings could help in many situations, making life considerably easier for the programmer. It was therefor decided to implement them, partly replacing the goals sought after in use case 4. A more complete picture, including an overview of the implementation, can be found in \ref{quickfixes}. The following list details on why these concepts were chosen. \newline
  
 \paragraph{Null Check}
@@ -31,11 +31,11 @@ Whenever a warning is issued by Dafny that an index may be out of bound, the plu
 Another concept that often arises when using Dafny is to make sure an expression converges to a certain range of values over time. This is the case when making use of recursion to ensure that the base case is eventually met, or when writing loops that depend on a certain value of an expression for termination. Both examples are very important, because not handling them correctly can result in endless loops or overflow. Dafny already does a good job in generating warnings that tell the programmer that constraints should be enforced for a certain expression. \newline
 These situations also occur very often, since both recursion and loops are fundamental elements of programming, it was decided that the generation of these constraints could greatly benefit the programmer. In order to do this, the plugin offers to add an increase / decrease clause with the correct expression in place when Dafny detects recursion or a loop. When the programmer chooses to use the quick fix, the guard statements are inserted at the correct place. Another important constraint when working with loops goes hand in hand with the use case described above, namely when an array is accessed within a loop and the expression used as an index is not constant within the context of the loop. For this, Dafny offers the construct of invariants, that ensure that an expression is within a certain range during a given context. The plugin therefor offers to generate invariants which ensure that an expression used as an index is always in bound of the array. When the programmer chooses to use this feature, the invariant is inserted at the correct context. 
 
-\subsubsection{Counter Examples}
+\subsection{Counter Examples}
 A concept which was not known as the project started, were counter examples. They provide a huge benefit, as to understand how a program violates its contract. Especially if it is a more complex software with many methods and many branches, it can be very difficult to understand why a contract does not hold\newline
 For this reason it was decided to implement that features in addition to CodeActions \ref{addCodeActions}. 
 Developers can use this practical features directly in Visual Studio Code. It shows on each line how the variables have to be assigned that the proof fail. \newline
 Because the calculation of the model, how it is called in Z3, can take very long, it is not run automatically if a proof fails. Nevertheless this can be overridden over the configuration. 
  
-\subsubsection{Displaying Control Flow}
+\subsection{Displaying Control Flow}
 \todo{Add}
