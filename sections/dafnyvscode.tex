@@ -186,6 +186,7 @@ method test() {
 
 
 \subsubsection{versioncheck}
+\todo{Remove}
 To support automatic updates of the Dafny environment in a general approach, it was decided to implement this features directly into the DafnyServer. To make it as general as possible, the check is directly performed on release page of the Dafny project. The GitHub API allows to check this in just one call. Additionally, a semantic versioning library\cite{semver} was used to compare the current and the version from GitHub. Based on that, it either checks if an update is available or if the latest version is installed. If there is an update available, the URL to download the package can also be read out of the returned JSON 
 \newline
 \textbf{Response from GitHub}
@@ -215,6 +216,7 @@ The command returns the version of the DafnyServer.
 \subsection{Dafny}
 
 \subsubsection{Unicode}
+\todo{Remove}
 Dafny would support the following Unicode characters: 
 
 \rowcolors{2}{gray!25}{white}
