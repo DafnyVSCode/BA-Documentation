@@ -13,7 +13,7 @@ The protocol between these two components is standardized by Microsoft, with the
 	\caption{Language Server}
 	\label{fig:languageServer}
 \end{figure}
-All actions can either be requests or notifications. The registration on such events is needed to 
+
 
 \paragraph{Why were they chosen to implement}
 Since Dafny is already supported on different operation systems, it was decided to make the plugin as platform and IDE independent as possible. Because Visual Studio Code supports the Language Server Protocol and is the reference implementation, the existing plugin was refactored to work as a language server. The strictly split of the plugin into a client and a server had also the benefit, that the architecture had to be changed, which resulted in a much better and clearer structure. \newline
