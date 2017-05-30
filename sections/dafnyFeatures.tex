@@ -134,3 +134,24 @@ No existing solution offers an automatic way of generating these guards, a tasks
 This feature therefor allows the programmer to be more productive and concentrate on key areas of concern.
 
 
+
+
+\subsubsection{Flowgraph}
+
+\paragraph{What are they}
+A existing feature in Boogie is to translate boogie programs into a flow graph. It does not only show the flow of the program itself but also includes all pre- and postconditions. Below is an example of a flowgraph, from the partition method of a quicksort algorithm.  
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1.0\textwidth]{img/flowgraph}
+	\caption{Flowgraph of the partition method}
+	\label{fig:flowgraph}
+\end{figure}
+
+
+\paragraph{Why were they chosen to implement}
+Because this feature existed already in Boogie, on the goal was to support as many features from the Dafny pipeline, it was decided that this feature could be easily and nicely implemented. 
+
+\paragraph{What benefits do they entail}
+Developers can see directly in Visual Studio Code the flow of the program they are working on. Otherwise the would need to manually save the graph to a file, upload or convert the file to finally view it. This all is done in the background to have a nice user experience.
+
