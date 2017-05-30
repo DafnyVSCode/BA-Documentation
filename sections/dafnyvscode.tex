@@ -39,9 +39,6 @@ Additionally, this section details meta information about the plugin such as who
 
 \paragraph{Go to definition}
 
-\paragraph{Debugger}
-\todo{Boogie Verification Debugger: Why BVD can't be used directly: C sharp UI, }
-
 \subsection{Communication}
 
 \subsection{Syntax highlighting}
@@ -49,11 +46,6 @@ Additionally, this section details meta information about the plugin such as who
 \subsection{Snippets}
 
 \subsection{Automatic installation}
-\subsubsection{Windows}
-
-\subsubsection{Ubuntu}
-
-\subsubsection{OSX}
 
 
 \subsection{DafnyServer}
@@ -184,66 +176,11 @@ method test() {
 \end{lstlisting}
 
 
-
-\subsubsection{versioncheck}
-\todo{Remove}
-To support automatic updates of the Dafny environment in a general approach, it was decided to implement this features directly into the DafnyServer. To make it as general as possible, the check is directly performed on release page of the Dafny project. The GitHub API allows to check this in just one call. Additionally, a semantic versioning library\cite{semver} was used to compare the current and the version from GitHub. Based on that, it either checks if an update is available or if the latest version is installed. If there is an update available, the URL to download the package can also be read out of the returned JSON 
-\newline
-\textbf{Response from GitHub}
-\begin{lstlisting}[language=json,firstnumber=1]
-[{
-  "name" : "v1.9.12",
-  "assets" : [{
-    "name" : "dafny-1.9.12-x64-osx-10.11.6.zip",
-    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-osx-10.11.6.zip"
-  }, {
-    "name" : "dafny-1.9.12-x64-ubuntu-14.04.zip",
-    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-ubuntu-14.04.zip"
-  }, {
-    "name" : "dafny-1.9.12-x64-win.zip",
-    "browser_download_url" : "https://github.com/FunctionalCorrectness/dafny-microsoft/releases/download/v1.9.12/dafny-1.9.12-x64-win.zip"
-  }]
-}]
-\end{lstlisting}
-
-Currently the check is performed against the URL:  \href{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases}{https://api.github.com/repos/FunctionalCorrectness/dafny-microsoft/releases} which has to be changed as soon as the pull request is performed. 
-
-
 \subsubsection{version}
 The command returns the version of the DafnyServer.  
 
 
-\subsection{Dafny}
+\subsubsection{counterExample}
 
-\subsubsection{Unicode}
-\todo{Remove}
-Dafny would support the following Unicode characters: 
-
-\rowcolors{2}{gray!25}{white}
-\begin{longtable}[H]
-	{l|p{0.22\textwidth}| p{0.22\textwidth} | p{0.1\textwidth} | p{0.1\textwidth} | p{0.25\textwidth} | p{0.25\textwidth}}
-	
-	\textbf{Ascii} & \textbf{Unicode}  \\ \hline
-	<==> & u21d4  \\  
-	==> & u21d2  \\  
-	<== & u21d0  \\  
-	\&\& & u2227  \\  
-	| | & u2228  \\  
-	!= & u2260  \\  
-	<= & u2264  \\  
-	>= & u2265  \\  
-	:: & u2022  \\  
-	! & u00ac  \\  
-	forall & u2200  \\  
-	exists & u2203  
-	
-	
-\end{longtable}
-
-Unfortunately they are not working right know because of a bug in the parser.
-
-
-
-
-
+\todo{ADD text}
 
