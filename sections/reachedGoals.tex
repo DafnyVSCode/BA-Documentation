@@ -1,7 +1,28 @@
-\subsection{Reached Goals}
-
+\subsection{Goals Reached}
+This chapter details the goals that were reached in this project and puts them into contrast with the current solutions that were introduced in \ref{cursol}
 \subsubsection{Platform Indepence}
+With three well established operating systems being used by different programmers, it is not feasible to have a solution that only works on one platform. There is often a trade off is this area regarding using powerful platform specific APIs and having a portable solution. While many other languages are supported by rich platform independent IDEs such as Eclipse \cite{eclipse} or those provided by JetBrains \cite{jetbrains}, the current solutions for Dafny still lack in this area. \newline
+Most IDEs that support Dafny only work correctly on Windows, Emacs \cite{GNU} with it's Dafny plugin is the only solution that works across all platforms. Emacs, while being a heavily used IDE, is an IDE with a very special methodology that does not suit all programmers, narrowing the range of people that can be reached by a Dafny integration. Further there are some cross platform IDEs that offer support for Dafny, for instance the old Dafny plugin for Visual Studio Code, but with those the integration itself does not work across all platforms. \newline
+This evaluation shows that there is need for a truly platform independent Dafny integration in a well established IDE that has a wide user base. \newline
 \subsubsection{Setup}
+This is an area where all current solutions lack comfort. Next to the plugin for the specific IDE, the user must also make sure to install the whole Dafny platform and configure the plugin correctly to make use of it. This is usually done either by editing a configuration file or by using a dialog in the IDE. Next to this being error prone and cumbersome for the user, this process is also dangerous when the IDE and the Dafny platform are further developed. Version updates may introduce breaking changes which will make it unable to work with a plugin if it is not well maintained. \newline
+Next to an automatic installation of all components that are necessary, it is important to have some integration tests in place that notify in case of breaking changes, something that is very difficult if the gathering of all dependencies is not done in a single place. \newline
+
 \subsubsection{Usability}
+When designing a plugin, one usually does not have many options regarding usability, since the user interacts with the IDE rather than with the plugin. It is therefor important to make usage of the correct mechanisms that an IDE offers, for instance displaying compiler errors in the appropriate window or underlining warnings with the color the IDE uses for warnings also in other languages. When further user interaction is needed, for instance for the application of a refactoring or displaying configuration possibilities of a plugin, IDEs usually offer an idiomatic way to do this.  \newline
+
+The existing solutions do a nice job in this area, if information of the plugins is displayed, it usually is done so using the correct mechanism that the IDE offers for that type of information. Almost all existing solutions sadly only display a subset of the information that the Dafny platform could provide, here new solutions could offer improvements. The exception is the existing Visual Studio integration of Dafny \cite{visualstudiodafny}, which offers almost a complete interaction with the Dafny platform. 
+\newline
+
 \subsubsection{IDE Independence}
+While developing this plugin, it was decided to implement it as a language server. This has the potential to decouple the plugin from a concrete IDE and make it reusable, as was detailed in \ref{setup}. Making such an integration to an IDE other than Visual Studio Code work was outside of the scope of this project, but a proof of concept was done for Emacs. \newline
+The proof of concept and the fact that the protocol is gaining traction fast make it safe to say that this project hat laid the foundation for many potential IDE integrations to come. \ref{ides} gives some ideas which integrations would be feasible in the near future. \newline
+The approach chosen when designing this plugin as a language server is unique among the existing solutions, making it the only one that is not hardwired to a specific IDE. This has great potential of widening the Dafny audience, but also of inviting other programmer to contribute to the plugin.
+
 \subsubsection{Feature Richness}
+During this project, many different feature were implemented. This includes language agnostic features detailed in \ref{agfeatures} as well as features that lend Dafny specific support to the programmer detailed in \ref{dffeatures}. While it was an important concern that programmers can use most features that they are used to from working with other languages, much thought was spent on how programmers can be supported writing Dafny specific code. This resulted in a collection of some solutions that are unique to this project. \newline
+Comparing the stand of the project with existing solutions, it surpasses most vastly regarding feature richness in both areas. The only platform to offer features, that this project does not do, is the Visual Studio integration. These features include a Dafny debugger, which is very helpful but sadly was outside of the scope of this project. However, this project integrates some features that have not been implemented yet in any IDE, especially automatic specification construct generation for some situations. \newline
+Since most solutions are open source, it stands to hope that they continuously offer more features by getting inspiration from other solutions. At the current time, programmers that make use of the solution developed in this project benefit from one of the two most feature rich Dafny programming experiences. 
+
+
+
