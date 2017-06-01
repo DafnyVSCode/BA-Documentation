@@ -1,4 +1,5 @@
 \section{Use Cases}
+This project details the use cases which were defined at the beginning of this project. Over the course of this project, insights were won which had the adaption of some of the use cases as a consequence. These modifications can be read about in \ref{projectCourse}.
 \subsection{Use Case Diagram}
 \begin{figure}[h]
 	\centering
@@ -21,8 +22,8 @@ The plugin can be configured with a simple DSL config file which describes commo
 \subsubsection{UC4: Automatic generation of contracts}
 The plugin can be configured with a simple DSL-File to recognize certain situations, which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.
 
-\subsubsection{UC5: Autocompletion for identifiers}
-The plugin offers autocompletion of Dafny code while the user types via the standard Visual Studio Code mechanisms.
+\subsubsection{UC5: Auto completion for identifiers}
+The plugin offers auto completion of Dafny code while the user types via the standard Visual Studio Code mechanisms.
 \subsection{Descriptions (fully dressed)}
 
 \subsubsection{UC1: Easy installation of Dafny plugin}
@@ -112,7 +113,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\caption{UC3}
 \end{longtable}
 
-\subsubsection{UC4: Automatic generation of contracts}
+\subsubsection{UC4: Automatic generation of contracts}\label{autogen}
 \begin{longtable}{l | p{0.7\textwidth} }
 	Description & The plugin can be configured with a simple DSL-File to recognize certain situations which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
 	Primary Actor & Programmer\\ \hline
@@ -142,9 +143,9 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\caption{UC4}
 \end{longtable}
 
-\subsubsection{UC5: Autocompletion for identifiers}
+\subsubsection{UC5: Auto completion for identifiers}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The plugin offers autocompletion of Dafny code while the user types via the standard Visual Studio Code mechanisms.\\ \hline
+	Description & The plugin offers auto completion of Dafny code while the user types via the standard Visual Studio Code mechanisms.\\ \hline
 	Primary Actor & Programmer\\ \hline
 	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
 	Stakeholder and Interests & Programmer: Wants to be more productive while writing Dafny code. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ \hline
@@ -155,7 +156,7 @@ The plugin offers autocompletion of Dafny code while the user types via the stan
 	\end{itemize}\\ \hline
 	Postconditions &
 	\begin{itemize}
-		\item An identifier was autocompleted.
+		\item An identifier was auto completed.
 	\end{itemize}\\ \hline
 	Main Success Scenario & 
 	1. Programmer types code into a .dfy file. \newline
