@@ -20,9 +20,9 @@ method FindSafe(a: array<int>, key: int) return (element: int)
 \end{lstlisting}
 \subsubsection{Example 2: Simple domain specific constraints} \label{Example 2}
 \paragraph{Problem:}
-A method that processes withdraws form a bank account may not make a bank balance negative.
+A method that processes withdraws from a bank account must not make a bank balance negative.
 \paragraph{Solution:}
-Generate a pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
+Generate pre- and postconditions on methods which modify relevant fields, according to domain specific constraints.
 \paragraph{Code:}
 \begin{lstlisting}[language=dafny]
 class BankAccountUnsafe {
@@ -118,7 +118,7 @@ The example in \ref{Example 2} is an example of a domain specific limitation whe
 The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an invariant, that the balance has always to be positive. This does not suffice though, as it does not isolate the parts yet which could break the invariant. \newline
 The third pattern, discussed in \nameref{non provable goal}, works very well in conjunction with the second one. All sub goals that should hold so that the invariant holds, in this case that the amount should be smaller than the balance, can be viewed as unprovable goals in this context. They can be therefore be formulated as preconditions such that the caller has the burden of applying correct arguments to the function. This practice isolates the parts which could break the invariant, allowing to write the function as safe as possible.
 \subsubsection{Enforcing Complex Invariants}
-The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let an expensive machine be subjected to abreason, therefore only allowing non-aggressive raw materials as input. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value true on the abreasesMachines property of a raw material However, if we extend the hierarchy of materials and implement the calculation of abreasesMachines differently, it is unclear if all cases could be computed efficiently. \newline
+The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let an expensive machine be subjected to abreason, therefore only allowing non-aggressive raw materials as input. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value true on the abreasesMachines property of a raw material. However, if we extend the hierarchy of materials and implement the calculation of abreasesMachines differently, it is unclear if all cases could be computed efficiently. \newline
 The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way, it could simply be stated as an Invariant, that the pristine property on the expensive machine is always true. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \nameref{Problem 2} \newline
 The third pattern could be used much the same way as in \nameref{Problem 2}. The condition, that the raw material may never abrease machines, can be written as a precondition and together with the usage of invariants holds the greatest amount of security regarding the domain constraints.
 \subsection{Conclusion}
