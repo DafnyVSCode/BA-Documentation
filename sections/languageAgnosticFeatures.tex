@@ -1,9 +1,9 @@
 \subsection{Language Agnostic Features}\label{agfeatures}
-This chapter details the language agnostic features that were implemented during the project. The implementation was heavily guided by the language server protocol and state of the art IDE integrations of well established languages. With these features the main goal was determining what programmers have become accustomed to when using an IDE and which features bring the biggest improvements regarding productivity. To get programmers to look deeper into the features that Dafny offers, it is important common tasks like navigating in a code base just work, because otherwise interest to learn new things fades quickly. \newline
-The details of the implementation can be found in the appendix \ref{features} or in the API documentation when even more detail is desired. This chapter simply aims to explain why certain features were chosen and what improvements they bring to the daily routine of a programmer.
+This chapter details the language agnostic features that were implemented during the project. The implementation was heavily guided by the language server protocol and state of the art IDE integrations of well established languages. With these features, the main goal was determining what programmers have become accustomed to when using an IDE and which features bring the biggest improvements regarding productivity. To get programmers to look deeper into the features that Dafny offers, it is important common tasks like navigating in a code base just work, because otherwise interest to learn new things fades quickly. \newline
+This chapter simply aims to explain why certain features were chosen and what improvements they bring to the daily routine of a programmer.
 \subsubsection{CodeLenses} \label{agcodelenses}
 \paragraph{What are CodeLenses}
-CodeLenses in Visual Studio Code are a feature which is also common to many other IDEs. The idea is to display meta information about certain pieces of codes, for instance classes and methods. In Visual Studio Code this is done  by adding an additional line of text to the editor wherever a codeLense should  be placed. \newline
+CodeLenses in Visual Studio Code are a feature which is also common to many other IDEs. The idea is to display meta information about certain pieces of codes, for instance classes and methods. In Visual Studio Code this is done  by adding an additional line of text to the editor wherever a codeLense should be placed. \newline
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/codelensesClosed}
@@ -13,12 +13,12 @@ CodeLenses in Visual Studio Code are a feature which is also common to many othe
 When given locations of the references, it is possible to let Visual Studio Code highlight them in the preview window which opens when a codeLens is expanded. Visual Studio Code also groups references according to the file path in the location, so the programmer gets to see a map of all references ordered by containing file to the right of the preview window and can quickly navigate to them.
 \paragraph{Why were they chosen to implement}
 Since codeLenses can be used to quickly gain a deeper understanding of a code base, it was decided to integrate this feature. Another reason was that it is widespread in different IDEs, so that programmers have become accosted to it. \newline
-The first decision to be made was for which elements in the code codeLenses should be displayed. The trade off here is to  provide enough information to work comfortably with the code base and not to clutter the workspace with codeLenses It was decided to display codeLenses for classes, methods (including constructors) and fields, since they tend to have a wide scope in the code bases \newline
+The first decision to be made was for which elements in the code codeLenses should be displayed. The trade off here is to  provide enough information to work comfortably with the code base and not to clutter the workspace with codeLenses. It was decided to display codeLenses for classes, methods (including constructors) and fields, since they tend to have a wide scope in the code bases \newline
 A second consideration was which information should be displayed in a codeLens. When codeLenses are language specific and do not for instance stem from a plugin which displays code metrics or similar, usually references and usages of the element are displayed. Since this allows the programmer to gain a deeper understanding of control flow and regions affected by refactoring, it was decided to display this information also for the Dafny plugin. CodeLenses also allow commands to be executed when clicked upon, a logical conclusion is to implement go to reference when a reference in a codeLens is clicked.\newline
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{img/codelensesExpanded}
-	\caption{Expanded codeLens showing the references to the field balance}
+	\caption{Expanded CodeLens showing the references to the field balance}
 	\label{fig:agcodelensesexpanded}
 \end{figure}
 \paragraph{What benefits do they entail}
@@ -44,7 +44,7 @@ As already detailed, the improvement in productivity is huge when using this fea
 	\caption{Suggestion displaying precondition}
 	\label{fig:agcodecompletionmethod}
 \end{figure}
-This combines a Dafny specific feature with a language agnostic one and lets the programmer know as early as possible under what restrictions he is working under. Being able to provide code completion in this plugin provides programmers with the opportunity translating their thoughts quickly into code and not having to bother with exact writing.
+This combines a Dafny specific feature with a language agnostic one and lets the programmer know as early as possible under what restrictions he is working under. Being able to provide code completion in this plugin provides programmers with the opportunity to translate their thoughts quickly into code and not having to bother with exact writing.
 \subsubsection{Go to Definition} \label{aggotodefinition}
 \paragraph{What is Go to Definition}
 Another common feature in modern IDEs is go to definition. It enables the programmer to quickly jump to the definition of a code element he is currently working with in order to gain further insight about it. This can usually be done either via a hot key for the current cursor position or an option when opening the context menu via a right click, Visual Studio Code offers both ways.\newline
@@ -94,9 +94,9 @@ Syntax highlighting is the feature of displaying different elements in the edito
 \end{figure}
 Syntax highlighting is usually applied constantly and updates instantly when the programmer types new code. The mechanisms to display the coloring are also very deeply ingrained into the IDE, relaying on a declarative language grammar definition file to do all the coloring. 
 \paragraph{Why was it chosen to implement}
-Syntax highlighting is definitely the first feature to get working in an IDE, maybe next to run programming. Even simple text editors such as Notepad support syntax highlighting for multiple languages, so it is expected of a language integration to come with working highlighting.
+Syntax highlighting is definitely the first feature to get working in an IDE, maybe next to run program. Even simple text editors such as Notepad support syntax highlighting for multiple languages, so it is expected of a language integration to come with working highlighting.
 \paragraph{What benefits does it entail}
-This feature makes code a lot more readable, and a lot more time is spent reading code than writing. It makes the purpose of a symbol clear at first glance thanks to idiomatic coloring. Understanding code becomes much easier when one is guided by colors. Syntax highlighting can also help tracing bugs were the programmer and the compiler do not have the same opinion of a certain semantic, since syntax highlighting reflects the way a compiler interprets a piece of code. \newline
+This feature makes code a lot more readable, and a lot more time is spent reading code than writing. It makes the purpose of a symbol clear at first glance thanks to idiomatic coloring. Understanding code becomes much easier when one is guided by colors. Syntax highlighting can also help tracing bugs were the programmer and the compiler do not have the same opinion of a certain syntax, since syntax highlighting reflects the way a compiler interprets a piece of code. \newline
 Since this is such a basic feature, all existing solution support this feature, usually relying on the same grammar definition file written for the sublime integration of Dafny \cite{sublime}. This project expanded the implementation a little, also providing syntax highlighting for parameters and generic arguments, something that existing solutions neglect.
 \begin{figure}[H]
 	\centering
