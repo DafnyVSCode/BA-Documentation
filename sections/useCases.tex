@@ -27,145 +27,145 @@ The plugin offers auto completion of Dafny code while the user types via the sta
 \subsection{Descriptions (fully dressed)}
 
 \subsubsection{UC1: Easy installation of Dafny plugin}
-\rowcolors{1}{gray!25}{white}
+
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & A programmer can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.\\ \hline
-	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer wants to install the Dafny plugin to Visual Studio Code.\\ \hline
-	Stakeholder and Interests & Programmer: Wants an easy, automated installation of the plugin. \newline Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.\\ \hline
+	Description & A programmer can simply install the Dafny plugin by running an automatic installer which sets all path variables and makes additional needed environment adjustments.\\ 
+	Primary Actor & Programmer\\ 
+	Trigger & Programmer wants to install the Dafny plugin to Visual Studio Code.\\ 
+	Stakeholder and Interests & Programmer: Wants an easy, automated installation of the plugin. \newline Microsoft: Wants a stable Dafny integration to fulfill the needs of its clients.\\ 
 	Preconditions &\begin{itemize}
 		\item Depending on the environment, either the .NET or the mono framework are installed.
 		\item Visual Studio Code is installed.
 		\item The programmer has admin privileges in his environment.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Postconditions & 
 	\begin{itemize}
 		\item The plugin works without problems, the programmer can start writing code.
-	\end{itemize} \\ \hline
+	\end{itemize} \\ 
 	Main Success Scenario & 
 	1. Programmer downloads the plugin via the Visual Studio Code plugin store. \newline
 	2. The plugin determines which platform it is run on, and sets either the path to the .Net framework or the mono framework. \newline
 	3. The plugin downloads Dafny and sets the path to the DafnyServer binary. \newline
 	4. The plugin then installs itself via the standard Visual Studio Code plugin mechanisms. \newline
-	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\ \hline
+	5. The plugin prompts a success message and the programmer is ready to code in Dafny.\\
 	Extensions & 
 	2a. The installer can't find, depending on the environment, either the mono or the .Net framework in the standard locations. \newline 
-	- It prompts the user to enter the location and does so until the framework is found. \\ \hline
-	Special Requirements & None\\ \hline
-	Frequency of Occurrence & Usually once per working environment\\ \hline
-	Open Issues & None \\ \hline
+	- It prompts the user to enter the location and does so until the framework is found. \\ 
+	Special Requirements & None\\ 
+	Frequency of Occurrence & Usually once per working environment\\ 
+	Open Issues & None \\ 
 	\caption{UC1}
 \end{longtable}
 
 \subsubsection{UC2: Syntax Highlighting}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The system automatically does syntax highlighting while the user writes a Dafny (.dfy) file.\\ \hline
-	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
-	Stakeholder and Interests & Programmer: Wants enhanced readability for the source files he is working on. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ \hline
+	Description & The system automatically does syntax highlighting while the user writes a Dafny (.dfy) file.\\ 
+	Primary Actor & Programmer\\ 
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ 
+	Stakeholder and Interests & Programmer: Wants enhanced readability for the source files he is working on. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ 
 	Preconditions &
 	\begin{itemize}
 		\item Visual Studio Code with the Dafny plugin installed is running.
 		\item Dafny code is being written in a .dfy file.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Postconditions &
 	\begin{itemize}
 		\item The source code is highlighted in different colors according to common standards in general and the Visual Studio Code guidelines specifically.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Main Success Scenario & 
 	1. Programmer types code into a .dfy file. \newline
-	2. The plugin detects the changes and applies syntax highlighting through the standard Visual Studio Code mechanisms.\\ \hline
+	2. The plugin detects the changes and applies syntax highlighting through the standard Visual Studio Code mechanisms.\\ 
 	Extensions & 
 	2a. The newly written code causes a compilation error and cannot be interpreted. \newline 
-	- The previous syntax highlighting stays in place, the errors are highlighted according to common practices with compilation errors in Visual Studio Code. \\ \hline
-	Special Requirements & None\\ \hline
-	Frequency of Occurrence & Very often, after every key up event.\\ \hline
-	Open Issues & None \\ \hline
+	- The previous syntax highlighting stays in place, the errors are highlighted according to common practices with compilation errors in Visual Studio Code. \\ 
+	Special Requirements & None\\ 
+	Frequency of Occurrence & Very often, after every key up event.\\ 
+	Open Issues & None \\ 
 	\caption{UC2}
 \end{longtable}
 
 \subsubsection{UC3: Reporting of Dafny best practices violations}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The plugin can be configured with a simple DSL config file which describes common best practices for Dafny. The Plugin reports violations of these rules via the standard Visual Studio Code notification mechanisms.\\ \hline
-	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
-	Stakeholder and Interests & Programmer: Wants to write the cleanest code possible using common Dafny idioms. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ \hline
+	Description & The plugin can be configured with a simple DSL config file which describes common best practices for Dafny. The Plugin reports violations of these rules via the standard Visual Studio Code notification mechanisms.\\ 
+	Primary Actor & Programmer\\ 
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ 
+	Stakeholder and Interests & Programmer: Wants to write the cleanest code possible using common Dafny idioms. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ 
 	Preconditions &
 	\begin{itemize}
 		\item Visual Studio Code with the Dafny plugin installed is running.
 		\item Dafny code is being written in a .dfy file.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Postconditions &
 	\begin{itemize}
 		\item Violations of common best practices for Dafny are reported through the standard Visual Studio Code mechanisms.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Main Success Scenario & 
 	1. The plugin is installed preconfigured with a collection of common best practices for Dafny, which is done through a DSL file. \newline
 	2. Programmer types code into a .dfy file. \newline 
 	3. The plugin continuously checks for violations of the rules. \newline 
-	4. If a violation is detected, it is reported through the standard mechanisms of Visual Studio Code.\\ \hline
+	4. If a violation is detected, it is reported through the standard mechanisms of Visual Studio Code.\\ 
 	Extensions & 
 	1a. The predefined rules are not sufficient for the programmer. \newline 
-	- The programmer can update the configuration file himself to include his own or his company's coding guidelines. \\ \hline
-	Special Requirements & None\\ \hline
-	Frequency of Occurrence & Very often, after new valid syntax was written.\\ \hline
-	Open Issues & None \\ \hline
+	- The programmer can update the configuration file himself to include his own or his company's coding guidelines. \\ 
+	Special Requirements & None\\ 
+	Frequency of Occurrence & Very often, after new valid syntax was written.\\ 
+	Open Issues & None \\ 
 	\caption{UC3}
 \end{longtable}
 
 \subsubsection{UC4: Automatic generation of contracts}\label{autogen}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The plugin can be configured with a simple DSL-File to recognize certain situations which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ \hline
-	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
-	Stakeholder and Interests & Programmer: Wants help to find appropriate contracts. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ \hline
+	Description & The plugin can be configured with a simple DSL-File to recognize certain situations which could benefit from the setting of pre- and postconditions. The plugin offers to add these in form of a refactoring via the common Visual Studio Code mechanisms.\\ 
+	Primary Actor & Programmer\\ 
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ 
+	Stakeholder and Interests & Programmer: Wants help to find appropriate contracts. \newline Microsoft: Wants to support programmers getting the most out of Dafny.\\ 
 	Preconditions &
 	\begin{itemize}
 		\item Visual Studio Code with the Dafny plugin installed is running.
 		\item Dafny code is being written in a .dfy file.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Postconditions &
 	\begin{itemize}
 		\item Specification constructs suitable for the context were added to the code.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Main Success Scenario & 
 	1. The plugin is installed preconfigured with a collection of common situations for Dafny and their corresponding specification constraints, which is done through a DSL file. \newline
 	2. Programmer types code into a .dfy file. \newline 
 	3. The plugin continuously checks for situations that could benefit form the setting of specification constraints. \newline 
 	4. If such a semantic is detected, it is reported through the standard mechanisms of Visual Studio Code, with a command offered to add the constraints. \newline
-	5. The programmer invokes the refactoring and the necessary code is added.\\ \hline
+	5. The programmer invokes the refactoring and the necessary code is added.\\ 
 	Extensions & 
 	1a. The predefined situations and contract code additions are not sufficient for the programmer. \newline 
-	- The programmer can update the configuration file himself to include support for his own or his company's  common code semantics. \\ \hline
-	Special Requirements & None\\ \hline
-	Frequency of Occurrence & Very often, upon typing code with no syntax errors.\\ \hline
-	Open Issues & None \\ \hline
+	- The programmer can update the configuration file himself to include support for his own or his company's  common code semantics. \\ 
+	Special Requirements & None\\ 
+	Frequency of Occurrence & Very often, upon typing code with no syntax errors.\\ 
+	Open Issues & None \\ 
 	\caption{UC4}
 \end{longtable}
 
 \subsubsection{UC5: Auto completion for identifiers}
 \begin{longtable}{l | p{0.7\textwidth} }
-	Description & The plugin offers auto completion of Dafny code while the user types via the standard Visual Studio Code mechanisms.\\ \hline
-	Primary Actor & Programmer\\ \hline
-	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ \hline
-	Stakeholder and Interests & Programmer: Wants to be more productive while writing Dafny code. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ \hline
+	Description & The plugin offers auto completion of Dafny code while the user types via the standard Visual Studio Code mechanisms.\\ 
+	Primary Actor & Programmer\\ 
+	Trigger & Programmer writes Dafny code in Visual Studio Code.\\ 
+	Stakeholder and Interests & Programmer: Wants to be more productive while writing Dafny code. \newline Microsoft: Wants a state of the art IDE integration of Dafny.\\ 
 	Preconditions &
 	\begin{itemize}
 		\item Visual Studio Code with the Dafny plugin installed is running.
 		\item Dafny code is being written in a .dfy file.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Postconditions &
 	\begin{itemize}
 		\item An identifier was auto completed.
-	\end{itemize}\\ \hline
+	\end{itemize}\\ 
 	Main Success Scenario & 
 	1. Programmer types code into a .dfy file. \newline
 	2. The plugin detects the changes and searches for the beginning of known identifiers. \newline
-	3. If such a beginning is found, completion if offered through the standard mechanisms of Visual Studio Code.\\ \hline
+	3. If such a beginning is found, completion if offered through the standard mechanisms of Visual Studio Code.\\ 
 	Extensions & 
-	None. \\ \hline
-	Special Requirements & None\\ \hline
-	Frequency of Occurrence & Very often, after every key up event.\\ \hline
-	Open Issues & None \\ \hline
+	None. \\ 
+	Special Requirements & None\\ 
+	Frequency of Occurrence & Very often, after every key up event.\\ 
+	Open Issues & None \\ 
 	\caption{UC5}
 \end{longtable}
