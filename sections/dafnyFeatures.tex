@@ -1,5 +1,5 @@
 \subsection{Dafny Specific Features}\label{dffeatures}
-This chapter details the language specific features that were implemented during the project. Since Dafny focuses on an elegant way of writing specification constructs, the goal of these features is to aid the programmer writing them. While such constructs have great potential helping to write correct code, most programmers are not yet used to thinking in terms of this methodology. Additionally, there are situations which appear often that warrant the writing of similar specification constructs. While important, this work can become tedious. The features detailed in this chapter try to mitigate both these points. \newline
+This chapter details the language specific features that were implemented during the project. Since Dafny focuses on an elegant way of writing specification constructs, the goal of these features is to aid the programmer writing them. While such constructs have great potential helping to write correct code, most programmers are not yet used to thinking in terms of this methodology. In addition, there are situations which appear often that warrant the writing of similar specification constructs. While important, this work can become tedious. The features detailed in this chapter try to mitigate both these points. \newline
 \subsubsection{Counter Examples}
 \paragraph{What are Counter Examples}
 Dafny's proof pipeline works by trying to find a proof by contradiction. This means, that when a programmer writes a specification construct such as a postcondition, Dafny and its pipeline try to find a situation where the postcondition does not hold. If no violation is found, the proof obligation is satisfied. \newline
@@ -74,7 +74,7 @@ Current solution do not support the automatic generation of bound checking. This
 	\caption{Bound checks were generated}
 	\label{fig:dfindexInBound}
 \end{figure}
-Automatically resolving these checks therefor makes working with Dafny more efficient and is part of making the plugin more usable and supportive.
+Automatically resolving these checks therefore makes working with Dafny more efficient and is part of making the plugin more usable and supportive.
 \subsubsection{Increase / Decrease / Invariant Guards}
 \paragraph{What are they}
 These constructs that are called guards in this paper help ensuring that an expression complies with certain conditions. This is done by writing specification constructs that ensure this. 
@@ -100,7 +100,7 @@ No existing solution offers an automatic way of generating these guards, a tasks
 	\caption{Recursion guided by a decrease guard}
 	\label{fig:dfdecreaseguardapplied}
 \end{figure}
-This feature therefor allows the programmer to be more productive and concentrate on key areas of concern.
+This feature therefore allows the programmer to be more productive and concentrate on key areas of concern.
 \subsubsection{Flow Graphs}
 \paragraph{What are they}
 A existing feature in Boogie is to translate boogie programs into a flow graph. It does not only show the flow of the program itself but also includes all pre- and postconditions. Below is an example of a flowgraph, taken from the partition method of a quicksort algorithm.\newline  
