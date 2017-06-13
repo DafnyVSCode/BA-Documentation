@@ -29,7 +29,7 @@ They also help writing correct specification constructs, which is not always eas
 \end{figure}
 As already detailed in the paragraph above, counter examples also often show edge cases that lead to a condition not being satisfied, a very important consideration when programming. These can then easily be taken care of appropriately by the programmer, either by changing the specification construct or the implementation. Without displaying this information, it is very difficult for the programmer to exactly find out how a condition is violated. \newline
 This project is the only solution that displays counter examples except for the Visual Studio integration, a feature which is probably the most important Dafny specific aid an IDE can provide. 
-\subsubsection{Null Checks}
+\subsubsection{Null Checks}\label{nullCheck}
 \paragraph{What are Null Checks}
 Null checks are specification constructs that take the form of a precondition that requires an object to be not null. They can be written whenever a new context is opened. Examples are when an object is given as an argument to a method, then the specification is a precondition to the whole method. Another one is when a object is declared, potentially not initialized and used in a later following while block. Then the precondition is written for the while block.\newline
 \begin{figure}[H]
@@ -67,7 +67,7 @@ The first precondition states that the expression used as an index must resolve 
 \paragraph{Why where they chosen to implement}
 Since Dafny has enough knowledge about the array data structure, it issues compilation errors every time an array is accessed without checking for its bounds first. While programming with Dafny, it was observed that this is the case in almost every non trivial example using arrays. Since the array data structure is used quite often in Dafny, it was decided to also help the programmer with this construct, since bound checking is important, but tedious.
 \paragraph{What benefits do they entail}
-Current solution do not support the automatic generation of bound checking. This task has to be performed very often and is tedious. Relieving the programmer of this repetitive work frees his mind for working on core functionality of a product. \newline
+Current solutions do not support the automatic generation of bound checking. This task has to be performed very often and is tedious. Relieving the programmer of this repetitive work frees his mind for working on core functionality of a product. \newline
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{img/boundCheck}
@@ -106,8 +106,8 @@ This feature therefore allows the programmer to be more productive and concentra
 A existing feature in Boogie is to translate boogie programs into a flow graph. It does not only show the flow of the program itself but also includes all pre- and postconditions. Below is an example of a flowgraph, taken from the partition method of a quicksort algorithm.\newline  
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{img/flowgraph}
-	\caption{Flow Graph of the partition method}
+	\includegraphics[width=0.4\textwidth]{img/flowgraph}
+	\caption{Flow Graph of the sorted predicate mentioned in \ref{nullCheck}}
 	\label{fig:flowgraph}
 \end{figure}
 \paragraph{Why were they chosen to implement}

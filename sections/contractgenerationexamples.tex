@@ -52,7 +52,7 @@ Generate pre- and postconditions on methods which modify relevant fields, accord
 \paragraph{Code:}
 \begin{lstlisting}[language=dafny]
 class RawMaterial {
-	var abreasesMachines: bool;
+	var abrasesMachines: bool;
 }
 
 class NormalMachine {
@@ -67,7 +67,7 @@ class NormalMachine {
 		requires material != null
 	modifies this {
 		this.refineMatieral(material);
-		this.prestine := !material.abreasesMachines;
+		this.prestine := !material.abrasesMachines;
 	}
 }
 
@@ -83,15 +83,15 @@ class ExpensiveMachine {
 	
 	method processMaterial(material: RawMaterial) 
 		requires material != null
-		requires !material.abreasesMachines
+		requires !material.abrasesMachines
 		ensures prestine
 	modifies this {
 		this.refineMatieral(material);
-		this.prestine := !material.abreasesMachines;
+		this.prestine := !material.abrasesMachines;
 	}
 }
 \end{lstlisting}
-\subsection{Concepts in proof theory}
+\subsection{Important Concepts}
 All three examples have in common, that without the correct preconditions, they should result in proof obligations which cannot be proven.
 This subsection first details three common concepts that occur when reasoning about proof obligations. The next subsection sets them into connections with the problems mentioned in \ref{examples}.
 \subsubsection{Application of partial functions} \label{partial function}
@@ -103,26 +103,26 @@ One of the three problems can be expressed as the application of partial functio
 \end{itemize}
 The definition states that not all input values may be mapped by the function. The problem here therefore is to ensure that the function is applied on only a valid subset of A.
 \subsubsection{Invariants} \label{invariants}
-An Invariant can be defined as follows: A quantity which remains unchanged under certain classes of transformations. Invariants are extremely useful for classifying mathematical objects because they usually reflect intrinsic properties of the object of study.\cite[282ff]{hunt}\newline
-An Invariant is therefore extremely useful when one wants to ensure certain conditions of an object, which must hold at all times. If an invariant is to be applied to an object with multiple attributes, it is usually defined as a postcondition on all attributes. 
+An invariant can be defined as follows: A quantity which remains unchanged under certain classes of transformations. Invariants are extremely useful for classifying mathematical objects because they usually reflect intrinsic properties of the object of study.\cite[282ff]{hunt}\newline
+An invariant is therefore extremely useful when one wants to ensure certain conditions of an object, which must hold at all times. If an invariant is to be applied to an object with multiple attributes, it is usually defined as a postcondition on all attributes. 
 \subsubsection{Non provable Goals} \label{non provable goal}
 These are situations that are impossible to prove, because some postconditions do not hold or not sufficient information is available. They are very hard to detect and isolate from provable goals, although some work has found solutions under certain restrictions, for instance \cite{goals}. When an unprovable goal is encountered in a context, it is much easier to simply state it as a precondition for the context to be valid, thus burdening the calling context with ensuring that the goal holds. 
 \subsection{Concrete Application}
 This subsection finally shows how the patterns detailed above can be used to solve the programming examples, thus allowing generic solutions for many similar problems.
 \subsubsection{Resolving Bound checks}
-The situation shown in \ref{Example 1} is a very common situation while programming, basically one wants to prove that the index is always in the bounds of the array. Accessing an element in an array is an example of the \nameref{partial function}, where the set A only goes from zero to the length of the array minus one. Therefore one would have to prove that the application of the partial function does not result in an invalid element being given as an argument. The expression, which is used to get access, can be arbitrarily complex. The computation to ensure the in-boundness can be very expensive.  \newline
-Also the second pattern discussed in \nameref{invariants} could be applied, always ensuring that a given parameter is in bound of an array of an object, although this would not work with how invariants are normally applied, namely as postconditions. Since the expression that generates the index has nothing to do with the object itself, it is questionable if this is the right pattern to apply to this situation. \newline
-The third pattern, discussed in \nameref{non provable goal}, works very well if one assumes that it cannot be proven that the expression will always lead to a successful application of the partial function (although it could be proven in many cases). This allows to define this property as a precondition of the method, thus shifting the burden to the caller to always check his arguments. This is an easy and feasible solution to the first problem. 
+The situation shown in \ref{Example 1} is a very common situation while programming, basically one wants to prove that the index is always in the bounds of the array. Accessing an element in an array is an example of the \ref{partial function}, where the set A only goes from zero to the length of the array minus one. Therefore one would have to prove that the application of the partial function does not result in an invalid element being given as an argument. The expression, which is used to get access, can be arbitrarily complex. The computation to ensure the in-boundness can be very expensive.  \newline
+Also the second pattern discussed in \ref{invariants} could be applied, always ensuring that a given parameter is in bound of an array of an object, although this would not work with how invariants are normally applied, namely as postconditions. Since the expression that generates the index has nothing to do with the object itself, it is questionable if this is the right pattern to apply to this situation. \newline
+The third pattern, discussed in \ref{non provable goal}, works very well if one assumes that it cannot be proven that the expression will always lead to a successful application of the partial function (although it could be proven in many cases). This allows to define this property as a precondition of the method, thus shifting the burden to the caller to always check his arguments. This is an easy and feasible solution to the first problem. 
 \subsubsection{Enforcing Invariants} \label{Problem 2}
-The example in \ref{Example 2} is an example of a domain specific limitation where a bank account's balance should never fall below zero. In this specific implementation the usage of \nameref{partial function} could be discussed, since it is implemented as a binary minus function which only allows subtrahends from a certain range, although this approach could not be used for all possible implementations and is therefore not a feasible solution. \newline
-The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way. It could simply be stated as an invariant, that the balance has always to be positive. This does not suffice though, as it does not isolate the parts yet which could break the invariant. \newline
-The third pattern, discussed in \nameref{non provable goal}, works very well in conjunction with the second one. All sub goals that should hold so that the invariant holds, in this case that the amount should be smaller than the balance, can be viewed as unprovable goals in this context. They can therefore be formulated as preconditions such that the caller has the burden of applying correct arguments to the function. This practice isolates the parts which could break the invariant, allowing to write the function as safe as possible.
+The example in \ref{Example 2} is an example of a domain specific limitation where a bank account's balance should never fall below zero. In this specific implementation the usage of \ref{partial function} could be discussed, since it is implemented as a binary minus function which only allows subtrahends from a certain range, although this approach could not be used for all possible implementations and is therefore not a feasible solution. \newline
+The second pattern discussed in \ref{invariants} best describes the semantics of the situation in a very general way. It could simply be stated as an invariant, that the balance has always to be positive. This does not suffice though, as it does not isolate the parts yet which could break the invariant. \newline
+The third pattern, discussed in \ref{non provable goal}, works very well in conjunction with the second one. All sub goals that should hold so that the invariant holds, in this case that the amount should be smaller than the balance, can be viewed as unprovable goals in this context. They can therefore be formulated as preconditions such that the caller has the burden of applying correct arguments to the function. This practice isolates the parts which could break the invariant, allowing to write the function as safe as possible.
 \subsubsection{Enforcing Complex Invariants}
-The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let an expensive machine be subjected to abreason, therefore only allowing non-aggressive raw materials as input. In this specific implementation the usage of \nameref{partial function} could work very well, since the input set of the partial function is very small, namely only the value true on the abreasesMachines property of a raw material. However, if we extend the hierarchy of materials and implement the calculation of abreasesMachines differently, it is unclear if all cases could be computed efficiently. \newline
-The second pattern discussed in \nameref{invariants} best describes the semantics of the situation in a very general way. It could simply be stated as an Invariant, that the pristine property on the expensive machine is always true. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \nameref{Problem 2} \newline
-The third pattern could be used much the same way as in \nameref{Problem 2}. The condition, that the raw material may never abrease machines, can be written as a precondition and together with the usage of invariants holds the greatest amount of security regarding the domain constraints.
+The example in \ref{Example 3} is also an example of a domain specific limitation, although more complex. It combines several classes together, which could also potentially be subtyped. The goal is to never let an expensive machine be subjected to abrasion, therefore only allowing non-aggressive raw materials as input. In this specific implementation the usage of \ref{partial function} could work very well, since the input set of the partial function is very small, namely only the value true on the abrasesMachines property of a raw material. However, if we extend the hierarchy of materials and implement the calculation of abrasesMachines differently, it is unclear if all cases could be computed efficiently. \newline
+The second pattern discussed in \ref{invariants} best describes the semantics of the situation in a very general way. It could simply be stated as an Invariant, that the pristine property on the expensive machine is always true. This does not suffice though, as it does not isolate the parts yet which could break the invariant. This is the same situation as in \ref{Problem 2} \newline
+The third pattern could be used much the same way as in \ref{Problem 2}. The condition, that the raw material may never abrease machines, can be written as a precondition and together with the usage of invariants holds the greatest amount of security regarding the domain constraints.
 \subsection{Conclusion}
-As the discussion above shows, all of the three problems can be solved through the application of \nameref{invariants} and \nameref{non provable goal}. They make it unnecessary to solve the problems of \nameref{partial function}, which is often harder to do. All occurrences, where such a computation would be needed, can be seen as non provable goals and stated as preconditions for a method. The usage of invariants offers a syntactical transparent way of describing domain specific rules, and the implementation is a relative simple one, as it is simply translated into postconditions for all methods of an object. Together these two techniques offer solutions to many different problems in computer science, since they operate on a high abstraction, while still being syntactical transparent.\newline 
+As the discussion above shows, all of the three problems can be solved through the application of \ref{invariants} and \ref{non provable goal}. They make it unnecessary to solve the problems of \ref{partial function}. All occurrences, where such a computation would be needed, can be seen as non provable goals and stated as preconditions for a method. The usage of invariants offers a syntactical transparent way of describing domain specific rules, and the implementation is a relative simple one, as it is simply translated into postconditions for all methods of an object. Together these two techniques offer solutions to many different problems in computer science, since they operate on a high abstraction, while still being syntactical transparent.\newline 
 In the first example, the language itself has enough domain knowledge in order to generate the unprovable proof obligations, since it knows about the array type and its restrictions. In the two other cases the language  needs more domain knowledge in order to generate the unprovable proof obligations. As was shown above, invariants are a good way of providing this domain knowledge.
 Once the unprovable proof obligations can be found, they can be used as hints for preconditions that can be suggested to the programmer.\newline
 The hardest part of the implementation is the identification of non provable subgoals that are in relation to an invariant. To do this, detailed knowledge has to be available of the control flow of a program and all possible outcomes of a computation have to be considered, although the problem can be relaxed if one allows for false positives in the identification of non provable subgoals. Since the plugin only offers refactorings and does not apply them automatically, the programmer still can decide if the setting of the non provable goal as precondition is necessary.  

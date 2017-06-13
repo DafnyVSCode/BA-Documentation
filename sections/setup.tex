@@ -12,11 +12,11 @@ The protocol between these two components is standardized by Microsoft, with the
 	\label{fig:languageServer}
 \end{figure}
 \paragraph{Why were they chosen to implement}
-Since Dafny is already supported on different operation systems, it was decided to make the plugin as platform and IDE independent as possible. Because Visual Studio Code supports the Language Server Protocol and is the reference implementation, the existing plugin was refactored to work as a language server. The strict splitting of the plugin into a client and a server had also the benefit, that the architecture had to be changed, which resulted in a much better and clearer structure. \newline
+Since Dafny is already supported on different operation systems, it was decided to make the plugin as platform and IDE independent as possible. Because Visual Studio Code supports the Language Server Protocol and is the reference implementation, the plugin developed by Jonathan Rionatan was refactored to work as a language server. The strict splitting of the plugin into a client and a server had also the benefit, that the architecture had to be changed, which resulted in a much better and clearer structure. \newline
 In the future another IDE could just integrate the existing language server, make smaller tweaks to the client and it would work. No rewriting of the whole logic is needed, as one just can use the server, thanks to the standardized protocol. 
 \paragraph{What benefits do they entail}
 Developing the plugin as a language server has the big benefit, that it could be easily integrated into existing IDEs, which support the Language Server Protocol, without reprogramming everything. Supporting auto completion, go to definition, find all references, would just work, without writing a single line of code. The only step is to start the Language Server and connect to it. Only the client needs to be adjusted, depending on the requirements of how the GUI should look like and probably the programming language to developing the client will change. 
-See \ref{ides} for a overview of IDEs which were looked at and tried to be supported. 
+See \ref{ides} for a overview of IDEs which were looked at. 
 \subsubsection{Automatic Installation} \label{setupAutomaticInstallation}
 \paragraph{What is Automatic Installation}
 Automatic Installation is the process to setup the whole Dafny environment in the background. Downloading the latest release from GitHub, extract it and setting all necessary configuration properties correctly is its main task. This process is platform dependent, because there is a zip file for each operating system. 
